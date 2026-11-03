@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+
 /**
  * Maps building command results to HTTP responses.
  */
@@ -29,6 +30,7 @@ public class ResponseEntityFromBuildingCommandResultAssembler {
     private static HttpStatus statusFromFailure(BuildingCommandFailure failure) {
         return switch (failure) {
             case BuildingCommandFailure.DuplicateCode _ -> HttpStatus.CONFLICT;
+            case BuildingCommandFailure.NotFound _ -> HttpStatus.NOT_FOUND;
         };
     }
 }
