@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +56,7 @@ public class BuildingsController {
     public ResponseEntity<?> createBuilding(@Valid @RequestBody CreateBuildingResource resource) {
         var command = CreateBuildingCommandFromResourceAssembler.toCommandFromResource(resource);
         var result = buildingCommandService.handle(command);
-        return ResponseEntityFromBuildingCommandResultAssembler.toResponseEntityFromResult(result, messageSource);
+        return ResponseEntityFromBuildingCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.CREATED, messageSource);
     }
 
     @Operation(summary = "Get all buildings")
