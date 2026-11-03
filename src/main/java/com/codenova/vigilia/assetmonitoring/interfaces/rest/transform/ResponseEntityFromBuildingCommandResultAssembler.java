@@ -21,6 +21,13 @@ public class ResponseEntityFromBuildingCommandResultAssembler {
                 failure -> toProblemResponse(failure, messageSource));
     }
 
+    public static ResponseEntity<?> toNoContentResponseEntityFromResult(
+            Result<Building, BuildingCommandFailure> result, MessageSource messageSource) {
+        return result.fold(
+                building -> ResponseEntity.noContent().build(),
+                failure -> toProblemResponse(failure, messageSource));
+    }
+
     private static ResponseEntity<?> toProblemResponse(BuildingCommandFailure failure, MessageSource messageSource) {
         var status = statusFromFailure(failure);
         var detail = messageSource.getMessage(
