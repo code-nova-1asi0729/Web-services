@@ -1,6 +1,7 @@
 package com.codenova.vigilia.assetmonitoring.domain.model.aggregates;
 
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateBuildingCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.BuildingCode;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.BuildingStatus;
 import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.converters.BuildingCodeAttributeConverter;
@@ -61,5 +62,13 @@ public class Building extends AbstractAggregateRoot<Building> {
         this.district = command.district();
         this.totalUnits = command.totalUnits();
         this.status = BuildingStatus.ACTIVE;
+    }
+
+    public void update(UpdateBuildingCommand command) {
+        this.name = command.name();
+        this.address = command.address();
+        this.district = command.district();
+        this.totalUnits = command.totalUnits();
+        this.status = command.status();
     }
 }
