@@ -2,13 +2,16 @@ package com.codenova.vigilia.assetmonitoring.interfaces.rest;
 
 import com.codenova.vigilia.assetmonitoring.application.commandservices.BuildingCommandService;
 import com.codenova.vigilia.assetmonitoring.application.queryservices.BuildingQueryService;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.DeleteBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllBuildingsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetBuildingByIdQuery;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.BuildingResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.CreateBuildingResource;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.UpdateBuildingResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.CreateBuildingCommandFromResourceAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ResponseEntityFromBuildingCommandResultAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ResponseEntityFromBuildingQueryResultAssembler;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.UpdateBuildingCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +59,7 @@ public class BuildingsController {
     public ResponseEntity<?> createBuilding(@Valid @RequestBody CreateBuildingResource resource) {
         var command = CreateBuildingCommandFromResourceAssembler.toCommandFromResource(resource);
         var result = buildingCommandService.handle(command);
-        return ResponseEntityFromBuildingCommandResultAssembler.toResponseEntityFromResult(result, messageSource);
+        return ResponseEntityFromBuildingCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.CREATED, messageSource);
     }
 
     @Operation(summary = "Get all buildings")
@@ -84,5 +88,36 @@ public class BuildingsController {
         if (building.isEmpty())
             return ResponseEntityFromBuildingQueryResultAssembler.notFound(messageSource, "building.error.notFoundById", buildingId);
         return ResponseEntityFromBuildingQueryResultAssembler.toResponseEntityFromEntity(building.get());
+    }
+
+    @Operation(summary = "Update a building")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Building updated",
+                    content = @Content(schema = @Schema(implementation = BuildingResource.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Building not found",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    })
+    @PutMapping("/{buildingId}")
+    public ResponseEntity<?> updateBuilding(@PathVariable Long buildingId,
+                                            @Valid @RequestBody UpdateBuildingResource resource) {
+        var command = UpdateBuildingCommandFromResourceAssembler.toCommandFromResource(buildingId, resource);
+        var result = buildingCommandService.handle(command);
+        return ResponseEntityFromBuildingCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
+    }
+
+    @Operation(summary = "Delete a building")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Building deleted"),
+            @ApiResponse(responseCode = "400", description = "Invalid building id",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Building not found",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    })
+    @DeleteMapping("/{buildingId}")
+    public ResponseEntity<?> deleteBuilding(@PathVariable Long buildingId) {
+        var result = buildingCommandService.handle(new DeleteBuildingCommand(buildingId));
+        return ResponseEntityFromBuildingCommandResultAssembler.toNoContentResponseEntityFromResult(result, messageSource);
     }
 }

@@ -4,6 +4,8 @@ import com.codenova.vigilia.assetmonitoring.application.commandservices.Building
 import com.codenova.vigilia.assetmonitoring.application.commandservices.BuildingCommandService;
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Building;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateBuildingCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.DeleteBuildingCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.BuildingRepository;
 import com.codenova.vigilia.shared.application.patterns.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +39,32 @@ public class BuildingCommandServiceImpl implements BuildingCommandService {
             log.warn("Duplicate building code: {}", command.code().value());
             return Result.failure(new BuildingCommandFailure.DuplicateCode());
         }
+    }
+
+    @Override
+    @Transactional
+    public Result<Building, BuildingCommandFailure> handle(UpdateBuildingCommand command) {
+        var building = buildingRepository.findById(command.buildingId());
+        if (building.isEmpty()) {
+            log.warn("Building not found: id={}", command.buildingId());
+            return Result.failure(new BuildingCommandFailure.NotFound());
+        }
+        building.get().update(command);
+        var updated = buildingRepository.save(building.get());
+        log.info("Building updated: id={}", updated.getId());
+        return Result.success(updated);
+    }
+
+    @Override
+    @Transactional
+    public Result<Building, BuildingCommandFailure> handle(DeleteBuildingCommand command) {
+        var building = buildingRepository.findById(command.buildingId());
+        if (building.isEmpty()) {
+            log.warn("Building not found: id={}", command.buildingId());
+            return Result.failure(new BuildingCommandFailure.NotFound());
+        }
+        buildingRepository.delete(building.get());
+        log.info("Building deleted: id={}", command.buildingId());
+        return Result.success(building.get());
     }
 }

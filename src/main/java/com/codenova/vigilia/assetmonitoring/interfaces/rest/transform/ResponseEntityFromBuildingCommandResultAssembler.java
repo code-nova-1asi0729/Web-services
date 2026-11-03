@@ -14,21 +14,31 @@ import org.springframework.http.ResponseEntity;
 public class ResponseEntityFromBuildingCommandResultAssembler {
 
     public static ResponseEntity<?> toResponseEntityFromResult(
+            Result<Building, BuildingCommandFailure> result, HttpStatus successStatus, MessageSource messageSource) {
+        return result.fold(
+                building -> ResponseEntity.status(successStatus)
+                        .body(BuildingResourceFromEntityAssembler.toResourceFromEntity(building)),
+                failure -> toProblemResponse(failure, messageSource));
+    }
+
+    public static ResponseEntity<?> toNoContentResponseEntityFromResult(
             Result<Building, BuildingCommandFailure> result, MessageSource messageSource) {
         return result.fold(
-                building -> ResponseEntity.status(HttpStatus.CREATED)
-                        .body(BuildingResourceFromEntityAssembler.toResourceFromEntity(building)),
-                failure -> {
-                    var status = statusFromFailure(failure);
-                    var detail = messageSource.getMessage(
-                            failure.messageKey(), null, failure.messageKey(), LocaleContextHolder.getLocale());
-                    return ResponseEntity.status(status).body(ProblemDetail.forStatusAndDetail(status, detail));
-                });
+                building -> ResponseEntity.noContent().build(),
+                failure -> toProblemResponse(failure, messageSource));
+    }
+
+    private static ResponseEntity<?> toProblemResponse(BuildingCommandFailure failure, MessageSource messageSource) {
+        var status = statusFromFailure(failure);
+        var detail = messageSource.getMessage(
+                failure.messageKey(), null, failure.messageKey(), LocaleContextHolder.getLocale());
+        return ResponseEntity.status(status).body(ProblemDetail.forStatusAndDetail(status, detail));
     }
 
     private static HttpStatus statusFromFailure(BuildingCommandFailure failure) {
         return switch (failure) {
             case BuildingCommandFailure.DuplicateCode _ -> HttpStatus.CONFLICT;
+            case BuildingCommandFailure.NotFound _ -> HttpStatus.NOT_FOUND;
         };
     }
 }
