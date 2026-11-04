@@ -1,0 +1,111 @@
+@host = http://localhost:8080
+
+### Create building LP-01
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Residencial Los Pinos",
+  "code": "LP-01",
+  "address": "Av. Los Pinos 450",
+  "district": "Santiago de Surco",
+  "totalUnits": 48
+}
+
+### Create building MA-02
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Condominio Mar Azul",
+  "code": "MA-02",
+  "address": "Jr. Las Gaviotas 120",
+  "district": "Chorrillos",
+  "totalUnits": 64
+}
+
+### Duplicate code (409)
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "name": "Residencial Los Pinos",
+  "code": "LP-01",
+  "address": "Av. Los Pinos 450",
+  "district": "Santiago de Surco",
+  "totalUnits": 48
+}
+
+### Invalid request (400)
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "name": "",
+  "code": "lp-01",
+  "address": "Av. Los Pinos 450",
+  "district": "Santiago de Surco",
+  "totalUnits": 0
+}
+
+### Get all buildings
+GET {{host}}/api/v1/buildings
+Accept-Language: en
+
+### Get building by id
+GET {{host}}/api/v1/buildings/1
+Accept-Language: en
+
+### Get building that does not exist (404)
+GET {{host}}/api/v1/buildings/999
+Accept-Language: es
+
+### Update building MA-02
+PUT {{host}}/api/v1/buildings/2
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Condominio Mar Azul",
+  "address": "Jr. Las Gaviotas 120",
+  "district": "Chorrillos",
+  "totalUnits": 66,
+  "status": "ACTIVE"
+}
+
+### Update building that does not exist (404)
+PUT {{host}}/api/v1/buildings/999
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "name": "Edificio inexistente",
+  "address": "Av. Siempre Viva 742",
+  "district": "Miraflores",
+  "totalUnits": 10,
+  "status": "INACTIVE"
+}
+
+### Create test building to delete
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Edificio de prueba",
+  "code": "TMP-99",
+  "address": "Calle Prueba 100",
+  "district": "Lince",
+  "totalUnits": 5
+}
+
+### Delete test building (204), id of TMP-99
+DELETE {{host}}/api/v1/buildings/3
+
+### Delete building that does not exist (404)
+DELETE {{host}}/api/v1/buildings/999
+Accept-Language: en
