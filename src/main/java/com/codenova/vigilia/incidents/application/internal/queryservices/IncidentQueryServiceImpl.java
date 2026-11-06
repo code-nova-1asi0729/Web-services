@@ -5,7 +5,7 @@ import com.codenova.vigilia.incidents.domain.model.aggregates.Incident;
 import com.codenova.vigilia.incidents.domain.model.queries.GetAllIncidentsQuery;
 import com.codenova.vigilia.incidents.domain.model.queries.GetIncidentByIdQuery;
 import com.codenova.vigilia.incidents.domain.model.queries.GetIncidentsByBuildingIdQuery;
-import com.codenova.vigilia.incidents.infrastructure.persistence.jpa.repositories.IncidentRepository;
+import com.codenova.vigilia.incidents.domain.repositories.IncidentRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
