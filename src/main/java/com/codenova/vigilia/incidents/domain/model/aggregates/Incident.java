@@ -112,4 +112,25 @@ public class Incident extends AbstractAggregateRoot<Incident> {
     public boolean isRated() {
         return ratingScore != null;
     }
+
+    public static Incident reconstitute(Long id, Long buildingId, Long residentId, Long equipmentId,
+                                        IncidentCategory category, String description, IncidentStatus status,
+                                        RatingScore ratingScore, String ratingComment, Instant reportedAt,
+                                        Instant startedAt, Instant resolvedAt, Instant ratedAt) {
+        var incident = new Incident();
+        incident.id = id;
+        incident.buildingId = buildingId;
+        incident.residentId = residentId;
+        incident.equipmentId = equipmentId;
+        incident.category = category;
+        incident.description = description;
+        incident.status = status;
+        incident.ratingScore = ratingScore;
+        incident.ratingComment = ratingComment;
+        incident.reportedAt = reportedAt;
+        incident.startedAt = startedAt;
+        incident.resolvedAt = resolvedAt;
+        incident.ratedAt = ratedAt;
+        return incident;
+    }
 }
