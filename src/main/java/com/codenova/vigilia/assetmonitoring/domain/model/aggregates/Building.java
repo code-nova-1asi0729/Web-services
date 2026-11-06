@@ -71,4 +71,17 @@ public class Building extends AbstractAggregateRoot<Building> {
         this.totalUnits = command.totalUnits();
         this.status = command.status();
     }
+
+    public static Building reconstitute(Long id, String name, BuildingCode code, String address,
+                                        String district, Integer totalUnits, BuildingStatus status) {
+        var building = new Building();
+        building.id = id;
+        building.name = name;
+        building.code = code;
+        building.address = address;
+        building.district = district;
+        building.totalUnits = totalUnits;
+        building.status = status;
+        return building;
+    }
 }
