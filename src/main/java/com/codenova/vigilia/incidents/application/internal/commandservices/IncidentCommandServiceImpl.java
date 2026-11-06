@@ -6,7 +6,7 @@ import com.codenova.vigilia.incidents.domain.model.aggregates.Incident;
 import com.codenova.vigilia.incidents.domain.model.commands.ReportIncidentCommand;
 import com.codenova.vigilia.incidents.domain.model.commands.UpdateIncidentCommand;
 import com.codenova.vigilia.incidents.domain.model.valueobjects.IncidentStatus;
-import com.codenova.vigilia.incidents.infrastructure.persistence.jpa.repositories.IncidentRepository;
+import com.codenova.vigilia.incidents.domain.repositories.IncidentRepository;
 import com.codenova.vigilia.shared.application.patterns.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

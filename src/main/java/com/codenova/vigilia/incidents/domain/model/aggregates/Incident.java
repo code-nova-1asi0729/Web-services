@@ -4,69 +4,31 @@ import com.codenova.vigilia.incidents.domain.model.commands.ReportIncidentComman
 import com.codenova.vigilia.incidents.domain.model.valueobjects.IncidentCategory;
 import com.codenova.vigilia.incidents.domain.model.valueobjects.IncidentStatus;
 import com.codenova.vigilia.incidents.domain.model.valueobjects.RatingScore;
-import com.codenova.vigilia.incidents.infrastructure.persistence.jpa.converters.RatingScoreAttributeConverter;
-import jakarta.persistence.*;
+import com.codenova.vigilia.shared.domain.model.aggregates.AbstractDomainAggregateRoot;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.AbstractAggregateRoot;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.Instant;
 /**
  * Problem reported by a resident and followed until it is resolved and rated
  */
 @Getter
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-public class Incident extends AbstractAggregateRoot<Incident> {
+public class Incident extends AbstractDomainAggregateRoot<Incident> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private Long buildingId;
-
-    @Column(nullable = false)
     private Long residentId;
-
     private Long equipmentId;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private IncidentCategory category;
-
-    @Column(nullable = false, length = 500)
     private String description;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private IncidentStatus status;
-
-    @Convert(converter = RatingScoreAttributeConverter.class)
     private RatingScore ratingScore;
-
-    @Column(length = 300)
     private String ratingComment;
-
-    @Column(nullable = false)
     private Instant reportedAt;
-
     private Instant startedAt;
-
     private Instant resolvedAt;
-
     private Instant ratedAt;
 
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
-    private Instant createdAt;
-
-    @Column(nullable = false)
-    @LastModifiedDate
-    private Instant updatedAt;
-
-    protected Incident() {}
+    private Incident() {}
 
     public Incident(ReportIncidentCommand command) {
         this.buildingId = command.buildingId();
@@ -76,6 +38,27 @@ public class Incident extends AbstractAggregateRoot<Incident> {
         this.description = command.description();
         this.status = IncidentStatus.REPORTED;
         this.reportedAt = Instant.now();
+    }
+
+    public static Incident reconstitute(Long id, Long buildingId, Long residentId, Long equipmentId,
+                                        IncidentCategory category, String description, IncidentStatus status,
+                                        RatingScore ratingScore, String ratingComment, Instant reportedAt,
+                                        Instant startedAt, Instant resolvedAt, Instant ratedAt) {
+        var incident = new Incident();
+        incident.id = id;
+        incident.buildingId = buildingId;
+        incident.residentId = residentId;
+        incident.equipmentId = equipmentId;
+        incident.category = category;
+        incident.description = description;
+        incident.status = status;
+        incident.ratingScore = ratingScore;
+        incident.ratingComment = ratingComment;
+        incident.reportedAt = reportedAt;
+        incident.startedAt = startedAt;
+        incident.resolvedAt = resolvedAt;
+        incident.ratedAt = ratedAt;
+        return incident;
     }
 
     public boolean start() {
@@ -111,26 +94,5 @@ public class Incident extends AbstractAggregateRoot<Incident> {
 
     public boolean isRated() {
         return ratingScore != null;
-    }
-
-    public static Incident reconstitute(Long id, Long buildingId, Long residentId, Long equipmentId,
-                                        IncidentCategory category, String description, IncidentStatus status,
-                                        RatingScore ratingScore, String ratingComment, Instant reportedAt,
-                                        Instant startedAt, Instant resolvedAt, Instant ratedAt) {
-        var incident = new Incident();
-        incident.id = id;
-        incident.buildingId = buildingId;
-        incident.residentId = residentId;
-        incident.equipmentId = equipmentId;
-        incident.category = category;
-        incident.description = description;
-        incident.status = status;
-        incident.ratingScore = ratingScore;
-        incident.ratingComment = ratingComment;
-        incident.reportedAt = reportedAt;
-        incident.startedAt = startedAt;
-        incident.resolvedAt = resolvedAt;
-        incident.ratedAt = ratedAt;
-        return incident;
     }
 }
