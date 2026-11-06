@@ -5,7 +5,7 @@ import com.codenova.vigilia.assetmonitoring.application.commandservices.Equipmen
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.CriticalEquipment;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.RegisterEquipmentCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.ModifyEquipmentCommand;
-import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.BuildingRepository;
+import com.codenova.vigilia.assetmonitoring.domain.repositories.BuildingRepository;
 import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.EquipmentRepository;
 import com.codenova.vigilia.shared.application.patterns.Result;
 import lombok.extern.slf4j.Slf4j;
