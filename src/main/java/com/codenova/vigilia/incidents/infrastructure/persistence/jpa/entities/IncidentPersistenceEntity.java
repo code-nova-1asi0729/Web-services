@@ -3,7 +3,7 @@ package com.codenova.vigilia.incidents.infrastructure.persistence.jpa.entities;
 import com.codenova.vigilia.incidents.domain.model.valueobjects.IncidentCategory;
 import com.codenova.vigilia.incidents.domain.model.valueobjects.IncidentStatus;
 import com.codenova.vigilia.incidents.domain.model.valueobjects.RatingScore;
-import com.codenova.vigilia.incidents.infrastructure.persistence.jpa.converters.RatingScoreAttributeConverter;
+import com.codenova.vigilia.incidents.infrastructure.persistence.jpa.converters.RatingScorePersistenceConverter;
 import com.codenova.vigilia.shared.infrastructure.persistence.jpa.entities.AuditableAbstractPersistenceEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class IncidentPersistenceEntity extends AuditableAbstractPersistenceEntit
     @Enumerated(EnumType.STRING)
     private IncidentStatus status;
 
-    @Convert(converter = RatingScoreAttributeConverter.class)
+    @Convert(converter = RatingScorePersistenceConverter.class)
     private RatingScore ratingScore;
 
     @Column(length = 300)

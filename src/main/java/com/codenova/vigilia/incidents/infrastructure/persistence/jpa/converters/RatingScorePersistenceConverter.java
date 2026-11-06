@@ -7,7 +7,7 @@ import jakarta.persistence.Converter;
  * Persists RatingScore as a nullable integer column
  */
 @Converter
-public class RatingScoreAttributeConverter implements AttributeConverter<RatingScore, Integer> {
+public class RatingScorePersistenceConverter implements AttributeConverter<RatingScore, Integer> {
     @Override
     public Integer convertToDatabaseColumn(RatingScore attribute) {
         return attribute == null ? null : attribute.value();
