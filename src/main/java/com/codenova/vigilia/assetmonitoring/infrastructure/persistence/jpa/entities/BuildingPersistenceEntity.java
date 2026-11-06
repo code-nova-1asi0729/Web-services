@@ -2,7 +2,7 @@ package com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.enti
 
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.BuildingCode;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.BuildingStatus;
-import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.converters.BuildingCodeAttributeConverter;
+import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.converters.BuildingCodePersistenceConverter;
 import com.codenova.vigilia.shared.infrastructure.persistence.jpa.entities.AuditableAbstractPersistenceEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class BuildingPersistenceEntity extends AuditableAbstractPersistenceEntit
     private String name;
 
     @Column(nullable = false, unique = true)
-    @Convert(converter = BuildingCodeAttributeConverter.class)
+    @Convert(converter = BuildingCodePersistenceConverter.class)
     private BuildingCode code;
 
     @Column(nullable = false)

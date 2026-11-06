@@ -7,7 +7,7 @@ import jakarta.persistence.Converter;
  * Persists BuildingCode as a plain string column.
  */
 @Converter
-public class BuildingCodeAttributeConverter implements AttributeConverter<BuildingCode, String> {
+public class BuildingCodePersistenceConverter implements AttributeConverter<BuildingCode, String> {
     @Override
     public String convertToDatabaseColumn(BuildingCode attribute) {
         return attribute == null ? null : attribute.value();
