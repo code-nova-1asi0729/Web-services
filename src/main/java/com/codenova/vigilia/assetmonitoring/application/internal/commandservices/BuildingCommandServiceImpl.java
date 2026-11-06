@@ -6,7 +6,7 @@ import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Building;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.DeleteBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateBuildingCommand;
-import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.BuildingRepository;
+import com.codenova.vigilia.assetmonitoring.domain.repositories.BuildingRepository;
 import com.codenova.vigilia.shared.application.patterns.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,7 +63,7 @@ public class BuildingCommandServiceImpl implements BuildingCommandService {
             log.warn("Building not found: id={}", command.buildingId());
             return Result.failure(new BuildingCommandFailure.NotFound());
         }
-        buildingRepository.delete(building.get());
+        buildingRepository.deleteById(command.buildingId());
         log.info("Building deleted: id={}", command.buildingId());
         return Result.success(building.get());
     }

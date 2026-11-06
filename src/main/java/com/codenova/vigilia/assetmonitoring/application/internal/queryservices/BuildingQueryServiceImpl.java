@@ -4,7 +4,7 @@ import com.codenova.vigilia.assetmonitoring.application.queryservices.BuildingQu
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Building;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllBuildingsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetBuildingByIdQuery;
-import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.BuildingRepository;
+import com.codenova.vigilia.assetmonitoring.domain.repositories.BuildingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
