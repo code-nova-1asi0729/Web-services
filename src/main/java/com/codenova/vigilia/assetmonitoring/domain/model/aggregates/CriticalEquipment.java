@@ -1,7 +1,7 @@
 package com.codenova.vigilia.assetmonitoring.domain.model.aggregates;
 
-import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateEquipmentCommand;
-import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateEquipmentCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.RegisterEquipmentCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.ModifyEquipmentCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentCode;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentStatus;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentType;
@@ -60,7 +60,7 @@ public class CriticalEquipment extends AbstractAggregateRoot<CriticalEquipment> 
 
     protected CriticalEquipment() {}
 
-    public CriticalEquipment(CreateEquipmentCommand command) {
+    public CriticalEquipment(RegisterEquipmentCommand command) {
         this.buildingId = command.buildingId();
         this.code = command.code();
         this.name = command.name();
@@ -70,7 +70,7 @@ public class CriticalEquipment extends AbstractAggregateRoot<CriticalEquipment> 
         this.status = EquipmentStatus.OPERATIONAL;
     }
 
-    public void update(UpdateEquipmentCommand command) {
+    public void update(ModifyEquipmentCommand command) {
         this.name = command.name();
         this.type = command.type();
         this.location = command.location();

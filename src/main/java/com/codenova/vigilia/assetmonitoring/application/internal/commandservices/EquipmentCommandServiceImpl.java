@@ -3,8 +3,8 @@ package com.codenova.vigilia.assetmonitoring.application.internal.commandservice
 import com.codenova.vigilia.assetmonitoring.application.commandservices.EquipmentCommandFailure;
 import com.codenova.vigilia.assetmonitoring.application.commandservices.EquipmentCommandService;
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.CriticalEquipment;
-import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateEquipmentCommand;
-import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateEquipmentCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.RegisterEquipmentCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.ModifyEquipmentCommand;
 import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.BuildingRepository;
 import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.EquipmentRepository;
 import com.codenova.vigilia.shared.application.patterns.Result;
@@ -28,7 +28,7 @@ public class EquipmentCommandServiceImpl implements EquipmentCommandService {
 
     @Override
     @Transactional
-    public Result<CriticalEquipment, EquipmentCommandFailure> handle(CreateEquipmentCommand command) {
+    public Result<CriticalEquipment, EquipmentCommandFailure> handle(RegisterEquipmentCommand command) {
         if (!buildingRepository.existsById(command.buildingId())) {
             log.warn("Building not found: id={}", command.buildingId());
             return Result.failure(new EquipmentCommandFailure.BuildingNotFound());
@@ -49,7 +49,7 @@ public class EquipmentCommandServiceImpl implements EquipmentCommandService {
 
     @Override
     @Transactional
-    public Result<CriticalEquipment, EquipmentCommandFailure> handle(UpdateEquipmentCommand command) {
+    public Result<CriticalEquipment, EquipmentCommandFailure> handle(ModifyEquipmentCommand command) {
         var equipment = equipmentRepository.findById(command.equipmentId());
         if (equipment.isEmpty()) return Result.failure(new EquipmentCommandFailure.NotFound());
         if (equipment.get().isDecommissioned()) return Result.failure(new EquipmentCommandFailure.AlreadyDecommissioned());

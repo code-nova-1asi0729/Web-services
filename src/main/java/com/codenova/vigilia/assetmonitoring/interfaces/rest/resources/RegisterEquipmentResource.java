@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Schema(description = "Request to create a critical equipment")
-public record CreateEquipmentResource(
+public record RegisterEquipmentResource(
         @Schema(description = "Building identifier", example = "1")
         @NotNull(message = "{equipment.error.buildingId.invalid}")
         @Positive(message = "{equipment.error.buildingId.invalid}")

@@ -10,7 +10,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Schema(description = "Request to update a critical equipment")
-public record UpdateEquipmentResource(
+public record ModifyEquipmentResource(
         @Schema(description = "Equipment name", example = "Bomba hidroneumática 1")
         @NotBlank(message = "{equipment.error.name.notBlank}")
         String name,

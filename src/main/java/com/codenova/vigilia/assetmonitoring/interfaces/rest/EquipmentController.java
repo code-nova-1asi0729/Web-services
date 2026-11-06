@@ -5,13 +5,13 @@ import com.codenova.vigilia.assetmonitoring.application.queryservices.EquipmentQ
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllEquipmentQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetEquipmentByBuildingIdQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetEquipmentByIdQuery;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.CreateEquipmentResource;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.RegisterEquipmentResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.EquipmentResource;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.UpdateEquipmentResource;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.CreateEquipmentCommandFromResourceAssembler;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.ModifyEquipmentResource;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.RegisterEquipmentCommandFromResourceAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ResponseEntityFromEquipmentCommandResultAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ResponseEntityFromEquipmentQueryResultAssembler;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.UpdateEquipmentCommandFromResourceAssembler;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ModifyEquipmentCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -60,8 +60,8 @@ public class EquipmentController {
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping
-    public ResponseEntity<?> createEquipment(@Valid @RequestBody CreateEquipmentResource resource) {
-        var command = CreateEquipmentCommandFromResourceAssembler.toCommandFromResource(resource);
+    public ResponseEntity<?> registerEquipment(@Valid @RequestBody RegisterEquipmentResource resource) {
+        var command = RegisterEquipmentCommandFromResourceAssembler.toCommandFromResource(resource);
         var result = equipmentCommandService.handle(command);
         return ResponseEntityFromEquipmentCommandResultAssembler
                 .toResponseEntityFromResult(result, HttpStatus.CREATED, messageSource);
@@ -110,9 +110,9 @@ public class EquipmentController {
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PutMapping("/{equipmentId}")
-    public ResponseEntity<?> updateEquipment(@PathVariable Long equipmentId,
-                                             @Valid @RequestBody UpdateEquipmentResource resource) {
-        var command = UpdateEquipmentCommandFromResourceAssembler.toCommandFromResource(equipmentId, resource);
+    public ResponseEntity<?> modifyEquipment(@PathVariable Long equipmentId,
+                                             @Valid @RequestBody ModifyEquipmentResource resource) {
+        var command = ModifyEquipmentCommandFromResourceAssembler.toCommandFromResource(equipmentId, resource);
         var result = equipmentCommandService.handle(command);
         return ResponseEntityFromEquipmentCommandResultAssembler
                 .toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
