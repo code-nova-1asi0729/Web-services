@@ -4,7 +4,6 @@ import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentC
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-
 @Converter
 public class EquipmentCodeAttributeConverter implements AttributeConverter<EquipmentCode, String> {
 
