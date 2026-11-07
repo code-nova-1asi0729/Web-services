@@ -1,6 +1,6 @@
 package com.codenova.vigilia.assetmonitoring.domain.model.aggregates;
 
-import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateBuildingCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.RegisterBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.BuildingCode;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.BuildingStatus;
@@ -23,7 +23,7 @@ public class Building extends AbstractDomainAggregateRoot<Building> {
 
     private Building() {}
 
-    public Building(CreateBuildingCommand command) {
+    public Building(RegisterBuildingCommand command) {
         this.name = command.name();
         this.code = command.code();
         this.address = command.address();

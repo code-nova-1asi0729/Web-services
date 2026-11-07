@@ -3,7 +3,7 @@ package com.codenova.vigilia.assetmonitoring.application.internal.commandservice
 import com.codenova.vigilia.assetmonitoring.application.commandservices.BuildingCommandFailure;
 import com.codenova.vigilia.assetmonitoring.application.commandservices.BuildingCommandService;
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Building;
-import com.codenova.vigilia.assetmonitoring.domain.model.commands.CreateBuildingCommand;
+import com.codenova.vigilia.assetmonitoring.domain.model.commands.RegisterBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.DeleteBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.UpdateBuildingCommand;
 import com.codenova.vigilia.assetmonitoring.domain.repositories.BuildingRepository;
@@ -26,14 +26,14 @@ public class BuildingCommandServiceImpl implements BuildingCommandService {
 
     @Override
     @Transactional
-    public Result<Building, BuildingCommandFailure> handle(CreateBuildingCommand command) {
+    public Result<Building, BuildingCommandFailure> handle(RegisterBuildingCommand command) {
         if (buildingRepository.existsByCode(command.code())) {
             log.warn("Duplicate building code: {}", command.code().value());
             return Result.failure(new BuildingCommandFailure.DuplicateCode());
         }
         try {
             var building = buildingRepository.save(new Building(command));
-            log.info("Building created: id={}, code={}", building.getId(), building.getCode().value());
+            log.info("Building registered: id={}, code={}", building.getId(), building.getCode().value());
             return Result.success(building);
         } catch (DataIntegrityViolationException exception) {
             log.warn("Duplicate building code: {}", command.code().value());

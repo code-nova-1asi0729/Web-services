@@ -6,9 +6,9 @@ import com.codenova.vigilia.assetmonitoring.domain.model.commands.DeleteBuilding
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllBuildingsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetBuildingByIdQuery;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.BuildingResource;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.CreateBuildingResource;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.RegisterBuildingResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.UpdateBuildingResource;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.CreateBuildingCommandFromResourceAssembler;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.RegisterBuildingCommandFromResourceAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ResponseEntityFromBuildingCommandResultAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.ResponseEntityFromBuildingQueryResultAssembler;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.UpdateBuildingCommandFromResourceAssembler;
@@ -46,9 +46,9 @@ public class BuildingsController {
         this.messageSource = messageSource;
     }
 
-    @Operation(summary = "Create a building")
+    @Operation(summary = "Register a building")
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Building created",
+            @ApiResponse(responseCode = "201", description = "Building registered",
                     content = @Content(schema = @Schema(implementation = BuildingResource.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
@@ -56,8 +56,8 @@ public class BuildingsController {
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping
-    public ResponseEntity<?> createBuilding(@Valid @RequestBody CreateBuildingResource resource) {
-        var command = CreateBuildingCommandFromResourceAssembler.toCommandFromResource(resource);
+    public ResponseEntity<?> registerBuilding(@Valid @RequestBody RegisterBuildingResource resource) {
+        var command = RegisterBuildingCommandFromResourceAssembler.toCommandFromResource(resource);
         var result = buildingCommandService.handle(command);
         return ResponseEntityFromBuildingCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.CREATED, messageSource);
     }

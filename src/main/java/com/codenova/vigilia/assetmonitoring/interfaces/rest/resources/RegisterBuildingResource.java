@@ -6,10 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 /**
- * Request body to create a building.
+ * Request body to register a building.
  */
-@Schema(description = "Request to create a building")
-public record CreateBuildingResource(
+@Schema(description = "Request to register a building")
+public record RegisterBuildingResource(
         @Schema(description = "Building name", example = "Residencial Los Pinos")
         @NotBlank(message = "{building.error.name.notBlank}")
         String name,
