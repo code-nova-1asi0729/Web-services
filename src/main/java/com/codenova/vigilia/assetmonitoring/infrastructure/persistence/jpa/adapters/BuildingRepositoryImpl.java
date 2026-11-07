@@ -36,6 +36,11 @@ public class BuildingRepositoryImpl implements BuildingRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return buildingPersistenceRepository.existsById(id);
+    }
+
+    @Override
     public boolean existsByCode(BuildingCode code) {
         return buildingPersistenceRepository.existsByCode(code);
     }

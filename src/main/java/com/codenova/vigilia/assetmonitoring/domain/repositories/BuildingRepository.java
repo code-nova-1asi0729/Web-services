@@ -14,6 +14,8 @@ public interface BuildingRepository {
 
     Optional<Building> findById(Long id);
 
+    boolean existsById(Long id);
+
     boolean existsByCode(BuildingCode code);
 
     Building save(Building building);
