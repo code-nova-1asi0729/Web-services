@@ -7,8 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-07
+
 ### Added
 
-- Project configuration and documentation.
-- Shared bounded context: naming strategy, result pattern and error handling.
-- Asset Monitoring: buildings endpoints.
+- Shared kernel: naming strategy, result pattern, localized problem details, CORS, domain aggregate root and auditable persistence entity.
+- Asset Monitoring: register, update, delete and query buildings.
+- Asset Monitoring: register, modify and query critical equipment.
+- Asset Monitoring: raise, acknowledge, resolve and query alerts.
+- Incidents: report, follow up and rate incidents.
+- Development and production profiles, and Dockerfile.
+- Code conventions in the contributing guide.
+
+### Changed
+
+- Domain aggregates no longer depend on JPA: persistence goes through repository adapters.
+- Building creation is now the `RegisterBuilding` command.
