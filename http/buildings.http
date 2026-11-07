@@ -1,6 +1,6 @@
 @host = http://localhost:8080
 
-### Create building LP-01
+### Register building LP-01
 POST {{host}}/api/v1/buildings
 Content-Type: application/json
 Accept-Language: en
@@ -13,7 +13,7 @@ Accept-Language: en
   "totalUnits": 48
 }
 
-### Create building MA-02
+### Register building MA-02
 POST {{host}}/api/v1/buildings
 Content-Type: application/json
 Accept-Language: en
@@ -90,7 +90,7 @@ Accept-Language: es
   "status": "INACTIVE"
 }
 
-### Create test building to delete
+### Register test building to delete
 POST {{host}}/api/v1/buildings
 Content-Type: application/json
 Accept-Language: en
