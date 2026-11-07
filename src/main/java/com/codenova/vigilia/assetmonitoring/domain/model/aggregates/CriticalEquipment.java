@@ -81,4 +81,19 @@ public class CriticalEquipment extends AbstractAggregateRoot<CriticalEquipment> 
     public boolean isDecommissioned() {
         return this.status == EquipmentStatus.DECOMMISSIONED;
     }
+
+    public static CriticalEquipment reconstitute(Long id, Long buildingId, EquipmentCode code, String name,
+                                                 EquipmentType type, String location, LocalDate installationDate,
+                                                 EquipmentStatus status) {
+        var equipment = new CriticalEquipment();
+        equipment.id = id;
+        equipment.buildingId = buildingId;
+        equipment.code = code;
+        equipment.name = name;
+        equipment.type = type;
+        equipment.location = location;
+        equipment.installationDate = installationDate;
+        equipment.status = status;
+        return equipment;
+    }
 }
