@@ -1,0 +1,83 @@
+@host = http://localhost:8080
+
+### Raise HIGH alert on equipment 2 (201)
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": 2,
+  "metric": "TEMPERATURE",
+  "severity": "HIGH",
+  "lastValue": 78.5
+}
+
+### Raise MEDIUM alert on equipment 1 (201)
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": 1,
+  "metric": "VIBRATION",
+  "severity": "MEDIUM",
+  "lastValue": 7.2
+}
+
+### Raise CRITICAL alert on equipment 3 (201)
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": 3,
+  "metric": "POWER_CONSUMPTION",
+  "severity": "CRITICAL",
+  "lastValue": 12.8
+}
+
+### Invalid request (400)
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "equipmentId": 0,
+  "metric": "TEMPERATURE"
+}
+
+### Get all alerts
+GET {{host}}/api/v1/alerts
+Accept-Language: en
+
+### Get active alerts
+GET {{host}}/api/v1/alerts?status=ACTIVE
+Accept-Language: en
+
+### Invalid status filter (400)
+GET {{host}}/api/v1/alerts?status=WRONG
+Accept-Language: en
+
+### Get alert 1
+GET {{host}}/api/v1/alerts/1
+Accept-Language: en
+
+### Alert not found (404)
+GET {{host}}/api/v1/alerts/999
+Accept-Language: es
+
+### Acknowledge alert 1 (200)
+POST {{host}}/api/v1/alerts/1/acknowledgements
+Accept-Language: en
+
+### Resolve alert 2 (200)
+POST {{host}}/api/v1/alerts/2/resolutions
+Accept-Language: en
+
+### Acknowledge a resolved alert (409)
+POST {{host}}/api/v1/alerts/2/acknowledgements
+Accept-Language: es
+
+### Resolve an alert that does not exist (404)
+POST {{host}}/api/v1/alerts/999/resolutions
+Accept-Language: en
