@@ -48,9 +48,9 @@ public class EquipmentController {
         this.messageSource = messageSource;
     }
 
-    @Operation(summary = "Create a critical equipment")
+    @Operation(summary = "Register a critical equipment")
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Equipment created",
+            @ApiResponse(responseCode = "201", description = "Equipment registered",
                     content = @Content(schema = @Schema(implementation = EquipmentResource.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class))),

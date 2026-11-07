@@ -39,7 +39,7 @@ public class EquipmentCommandServiceImpl implements EquipmentCommandService {
         }
         try {
             var equipment = equipmentRepository.save(new CriticalEquipment(command));
-            log.info("Equipment created: id={}, code={}", equipment.getId(), equipment.getCode().value());
+            log.info("Equipment registered: id={}, code={}", equipment.getId(), equipment.getCode().value());
             return Result.success(equipment);
         } catch (DataIntegrityViolationException exception) {
             log.warn("Duplicate equipment code: {}", command.code().value());
