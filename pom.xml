@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.codenova</groupId>
     <artifactId>vigilia</artifactId>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
     <name>vigilia-platform</name>
     <description>Vigilia Platform API: preventive maintenance of critical equipment in residential buildings</description>
     <url>https://github.com/code-nova-1asi0729/backend</url>
