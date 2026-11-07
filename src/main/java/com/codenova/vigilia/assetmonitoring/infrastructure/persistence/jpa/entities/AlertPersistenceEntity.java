@@ -36,7 +36,8 @@ public class AlertPersistenceEntity extends AuditableAbstractPersistenceEntity {
     @Enumerated(EnumType.STRING)
     private AlertStatus status;
 
-    @Column(nullable = false)
+    // last_value is a reserved word in MySQL 8, so the column uses another name
+    @Column(name = "last_reading_value", nullable = false)
     private Double lastValue;
 
     @Column(nullable = false)
