@@ -3,7 +3,7 @@ package com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.enti
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentCode;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentStatus;
 import com.codenova.vigilia.assetmonitoring.domain.model.valueobjects.EquipmentType;
-import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.converters.EquipmentCodeAttributeConverter;
+import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.converters.EquipmentCodePersistenceConverter;
 import com.codenova.vigilia.shared.infrastructure.persistence.jpa.entities.AuditableAbstractPersistenceEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class EquipmentPersistenceEntity extends AuditableAbstractPersistenceEnti
     private Long buildingId;
 
     @Column(nullable = false)
-    @Convert(converter = EquipmentCodeAttributeConverter.class)
+    @Convert(converter = EquipmentCodePersistenceConverter.class)
     private EquipmentCode code;
 
     @Column(nullable = false)
