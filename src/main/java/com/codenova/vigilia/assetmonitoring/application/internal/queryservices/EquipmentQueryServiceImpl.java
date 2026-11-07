@@ -5,7 +5,7 @@ import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.CriticalEqui
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllEquipmentQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetEquipmentByBuildingIdQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetEquipmentByIdQuery;
-import com.codenova.vigilia.assetmonitoring.infrastructure.persistence.jpa.repositories.EquipmentRepository;
+import com.codenova.vigilia.assetmonitoring.domain.repositories.EquipmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
