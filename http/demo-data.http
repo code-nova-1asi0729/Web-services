@@ -1,0 +1,243 @@
+# Demo data for Vigilia.
+# Run it once on an empty database, choosing the environment at the top of the editor (dev or prod).
+# Each request saves the real id of the response, so it also works when the database does not start ids at 1.
+
+### Register building Residencial Los Pinos
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Residencial Los Pinos",
+  "code": "LP-01",
+  "address": "Av. Los Pinos 450",
+  "district": "Santiago de Surco",
+  "totalUnits": 48
+}
+
+> {% client.global.set("losPinosId", response.body.id); %}
+
+### Register building Condominio Mar Azul
+POST {{host}}/api/v1/buildings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Condominio Mar Azul",
+  "code": "MA-02",
+  "address": "Jr. Las Gaviotas 120",
+  "district": "Chorrillos",
+  "totalUnits": 64
+}
+
+> {% client.global.set("marAzulId", response.body.id); %}
+
+### Register water pump in Los Pinos
+POST {{host}}/api/v1/equipment
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{losPinosId}},
+  "code": "LP-WP-01",
+  "name": "Bomba hidroneumática 1",
+  "type": "WATER_PUMP",
+  "location": "Sótano 1",
+  "installationDate": "2021-03-15"
+}
+
+> {% client.global.set("pumpId", response.body.id); %}
+
+### Register electrical panel in Los Pinos
+POST {{host}}/api/v1/equipment
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{losPinosId}},
+  "code": "LP-EP-01",
+  "name": "Tablero eléctrico general",
+  "type": "ELECTRICAL_PANEL",
+  "location": "Cuarto de máquinas",
+  "installationDate": "2020-08-10"
+}
+
+> {% client.global.set("panelId", response.body.id); %}
+
+### Register elevator in Los Pinos
+POST {{host}}/api/v1/equipment
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{losPinosId}},
+  "code": "LP-EL-01",
+  "name": "Ascensor torre A",
+  "type": "ELEVATOR",
+  "location": "Torre A",
+  "installationDate": "2019-05-20"
+}
+
+> {% client.global.set("elevatorId", response.body.id); %}
+
+### Register air conditioning in Mar Azul
+POST {{host}}/api/v1/equipment
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{marAzulId}},
+  "code": "MA-AC-01",
+  "name": "Aire acondicionado del lobby",
+  "type": "HVAC",
+  "location": "Lobby",
+  "installationDate": "2022-01-12"
+}
+
+> {% client.global.set("hvacId", response.body.id); %}
+
+### Mark the water pump as requiring follow-up
+PUT {{host}}/api/v1/equipment/{{pumpId}}
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Bomba hidroneumática 1",
+  "type": "WATER_PUMP",
+  "location": "Sótano 1",
+  "installationDate": "2021-03-15",
+  "status": "REQUIRES_FOLLOW_UP"
+}
+
+### Raise CRITICAL alert on the elevator
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{elevatorId}},
+  "metric": "POWER_CONSUMPTION",
+  "severity": "CRITICAL",
+  "lastValue": 12.8
+}
+
+### Raise HIGH alert on the air conditioning
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{hvacId}},
+  "metric": "TEMPERATURE",
+  "severity": "HIGH",
+  "lastValue": 78.5
+}
+
+### Raise MEDIUM alert on the water pump
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{pumpId}},
+  "metric": "VIBRATION",
+  "severity": "MEDIUM",
+  "lastValue": 7.2
+}
+
+> {% client.global.set("pumpAlertId", response.body.id); %}
+
+### Raise LOW alert on the electrical panel
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{panelId}},
+  "metric": "HUMIDITY",
+  "severity": "LOW",
+  "lastValue": 68.0
+}
+
+> {% client.global.set("panelAlertId", response.body.id); %}
+
+### Acknowledge the water pump alert
+POST {{host}}/api/v1/alerts/{{pumpAlertId}}/acknowledgements
+Accept-Language: en
+
+### Resolve the electrical panel alert
+POST {{host}}/api/v1/alerts/{{panelAlertId}}/resolutions
+Accept-Language: en
+
+### Report elevator incident in Los Pinos
+POST {{host}}/api/v1/incidents
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{losPinosId}},
+  "residentId": 3,
+  "equipmentId": {{elevatorId}},
+  "category": "ELEVATOR",
+  "description": "El ascensor de la torre A hace un ruido fuerte al subir."
+}
+
+### Report water incident in Los Pinos
+POST {{host}}/api/v1/incidents
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{losPinosId}},
+  "residentId": 4,
+  "category": "WATER",
+  "description": "Baja presión de agua en los pisos altos por la mañana."
+}
+
+> {% client.global.set("waterIncidentId", response.body.id); %}
+
+### Report air conditioning incident in Mar Azul
+POST {{host}}/api/v1/incidents
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": {{marAzulId}},
+  "residentId": 7,
+  "equipmentId": {{hvacId}},
+  "category": "HVAC",
+  "description": "El aire acondicionado del lobby no enfría desde ayer."
+}
+
+### Start attention of the water incident
+PUT {{host}}/api/v1/incidents/{{waterIncidentId}}
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "status": "IN_PROGRESS"
+}
+
+### Resolve the water incident
+PUT {{host}}/api/v1/incidents/{{waterIncidentId}}
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "status": "RESOLVED"
+}
+
+### Rate the water incident
+PUT {{host}}/api/v1/incidents/{{waterIncidentId}}
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "status": "RESOLVED",
+  "ratingScore": 5,
+  "ratingComment": "Lo arreglaron el mismo día."
+}
+
+### Check the loaded buildings
+GET {{host}}/api/v1/buildings
+Accept-Language: en
