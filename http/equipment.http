@@ -1,5 +1,5 @@
 ### Register equipment
-POST http://localhost:8080/api/v1/equipment
+POST {{host}}/api/v1/equipment
 Content-Type: application/json
 Accept-Language: en
 
@@ -13,7 +13,7 @@ Accept-Language: en
 }
 
 ### Register equipment
-POST http://localhost:8080/api/v1/equipment
+POST {{host}}/api/v1/equipment
 Content-Type: application/json
 Accept-Language: en
 
@@ -27,7 +27,7 @@ Accept-Language: en
 }
 
 ### Register equipment
-POST http://localhost:8080/api/v1/equipment
+POST {{host}}/api/v1/equipment
 Content-Type: application/json
 Accept-Language: en
 
@@ -41,19 +41,19 @@ Accept-Language: en
 }
 
 ### Get all equipment
-GET http://localhost:8080/api/v1/equipment
+GET {{host}}/api/v1/equipment
 Accept-Language: en
 
 ### Get equipment by building
-GET http://localhost:8080/api/v1/equipment?buildingId=1
+GET {{host}}/api/v1/equipment?buildingId=1
 Accept-Language: es
 
 ### Get equipment by id
-GET http://localhost:8080/api/v1/equipment/1
+GET {{host}}/api/v1/equipment/1
 Accept-Language: en
 
 ### Modify equipment
-PUT http://localhost:8080/api/v1/equipment/1
+PUT {{host}}/api/v1/equipment/1
 Content-Type: application/json
 Accept-Language: en
 

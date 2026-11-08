@@ -1,5 +1,3 @@
-@host = http://localhost:8080
-
 ### Report incident with equipment (201)
 POST {{host}}/api/v1/incidents
 Content-Type: application/json

@@ -1,5 +1,3 @@
-@host = http://localhost:8080
-
 ### Raise HIGH alert on equipment 2 (201)
 POST {{host}}/api/v1/alerts
 Content-Type: application/json

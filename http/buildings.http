@@ -1,5 +1,3 @@
-@host = http://localhost:8080
-
 ### Register building LP-01
 POST {{host}}/api/v1/buildings
 Content-Type: application/json
