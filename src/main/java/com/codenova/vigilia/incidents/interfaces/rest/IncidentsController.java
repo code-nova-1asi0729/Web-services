@@ -2,12 +2,16 @@ package com.codenova.vigilia.incidents.interfaces.rest;
 
 import com.codenova.vigilia.incidents.application.commandservices.IncidentCommandService;
 import com.codenova.vigilia.incidents.application.queryservices.IncidentQueryService;
+import com.codenova.vigilia.incidents.domain.model.commands.ResolveIncidentCommand;
+import com.codenova.vigilia.incidents.domain.model.commands.StartIncidentManagementCommand;
 import com.codenova.vigilia.incidents.domain.model.queries.GetAllIncidentsQuery;
 import com.codenova.vigilia.incidents.domain.model.queries.GetIncidentByIdQuery;
 import com.codenova.vigilia.incidents.domain.model.queries.GetIncidentsByBuildingIdQuery;
 import com.codenova.vigilia.incidents.interfaces.rest.resources.IncidentResource;
+import com.codenova.vigilia.incidents.interfaces.rest.resources.RateIncidentResource;
 import com.codenova.vigilia.incidents.interfaces.rest.resources.ReportIncidentResource;
 import com.codenova.vigilia.incidents.interfaces.rest.resources.UpdateIncidentResource;
+import com.codenova.vigilia.incidents.interfaces.rest.transform.RateIncidentCommandFromResourceAssembler;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.ReportIncidentCommandFromResourceAssembler;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.ResponseEntityFromIncidentCommandResultAssembler;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.ResponseEntityFromIncidentQueryResultAssembler;
@@ -107,6 +111,59 @@ public class IncidentsController {
     public ResponseEntity<?> updateIncident(@PathVariable Long incidentId,
                                             @Valid @RequestBody UpdateIncidentResource resource) {
         var command = UpdateIncidentCommandFromResourceAssembler.toCommandFromResource(incidentId, resource);
+        var result = incidentCommandService.handle(command);
+        return ResponseEntityFromIncidentCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
+    }
+
+    @Operation(summary = "Start managing a reported incident")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Incident management started",
+                    content = @Content(schema = @Schema(implementation = IncidentResource.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid incident id",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Incident not found",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "409", description = "Incident is not reported",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    })
+    @PostMapping("/{incidentId}/management-starts")
+    public ResponseEntity<?> startIncidentManagement(@PathVariable Long incidentId) {
+        var result = incidentCommandService.handle(new StartIncidentManagementCommand(incidentId));
+        return ResponseEntityFromIncidentCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
+    }
+
+    @Operation(summary = "Resolve an incident that is being managed")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Incident resolved",
+                    content = @Content(schema = @Schema(implementation = IncidentResource.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid incident id",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Incident not found",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "409", description = "Incident is not in progress",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    })
+    @PostMapping("/{incidentId}/resolutions")
+    public ResponseEntity<?> resolveIncident(@PathVariable Long incidentId) {
+        var result = incidentCommandService.handle(new ResolveIncidentCommand(incidentId));
+        return ResponseEntityFromIncidentCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
+    }
+
+    @Operation(summary = "Rate a resolved incident")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Incident rated",
+                    content = @Content(schema = @Schema(implementation = IncidentResource.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "404", description = "Incident not found",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
+            @ApiResponse(responseCode = "409", description = "Incident is not resolved or is already rated",
+                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    })
+    @PostMapping("/{incidentId}/ratings")
+    public ResponseEntity<?> rateIncident(@PathVariable Long incidentId,
+                                          @Valid @RequestBody RateIncidentResource resource) {
+        var command = RateIncidentCommandFromResourceAssembler.toCommandFromResource(incidentId, resource);
         var result = incidentCommandService.handle(command);
         return ResponseEntityFromIncidentCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
     }
