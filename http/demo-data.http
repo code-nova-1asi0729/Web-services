@@ -209,33 +209,22 @@ Accept-Language: en
   "description": "El aire acondicionado del lobby no enfría desde ayer."
 }
 
-### Start attention of the water incident
-PUT {{host}}/api/v1/incidents/{{waterIncidentId}}
-Content-Type: application/json
+### Start the management of the water incident
+POST {{host}}/api/v1/incidents/{{waterIncidentId}}/management-starts
 Accept-Language: en
-
-{
-  "status": "IN_PROGRESS"
-}
 
 ### Resolve the water incident
-PUT {{host}}/api/v1/incidents/{{waterIncidentId}}
-Content-Type: application/json
+POST {{host}}/api/v1/incidents/{{waterIncidentId}}/resolutions
 Accept-Language: en
-
-{
-  "status": "RESOLVED"
-}
 
 ### Rate the water incident
-PUT {{host}}/api/v1/incidents/{{waterIncidentId}}
+POST {{host}}/api/v1/incidents/{{waterIncidentId}}/ratings
 Content-Type: application/json
 Accept-Language: en
 
 {
-  "status": "RESOLVED",
-  "ratingScore": 5,
-  "ratingComment": "Lo arreglaron el mismo día."
+  "score": 5,
+  "comment": "Lo arreglaron el mismo día."
 }
 
 ### Check the loaded buildings

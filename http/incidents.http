@@ -51,60 +51,59 @@ Accept-Language: en
 GET {{host}}/api/v1/incidents/999
 Accept-Language: es
 
-### Start attention (200)
-PUT {{host}}/api/v1/incidents/1
+### Start the management of incident 1 (200)
+POST {{host}}/api/v1/incidents/1/management-starts
+Accept-Language: en
+
+### Start it again (409)
+POST {{host}}/api/v1/incidents/1/management-starts
+Accept-Language: es
+
+### Resolve incident 1 (200)
+POST {{host}}/api/v1/incidents/1/resolutions
+Accept-Language: en
+
+### Resolve incident 2 before starting its management (409)
+POST {{host}}/api/v1/incidents/2/resolutions
+Accept-Language: es
+
+### Rate incident 1 with 5 (200)
+POST {{host}}/api/v1/incidents/1/ratings
 Content-Type: application/json
 Accept-Language: en
 
 {
-  "status": "IN_PROGRESS"
+  "score": 5,
+  "comment": "Lo arreglaron el mismo día."
 }
 
-### Resolve (200)
-PUT {{host}}/api/v1/incidents/1
-Content-Type: application/json
-Accept-Language: en
-
-{
-  "status": "RESOLVED"
-}
-
-### Rate with 5 (200)
-PUT {{host}}/api/v1/incidents/1
-Content-Type: application/json
-Accept-Language: en
-
-{
-  "status": "RESOLVED",
-  "ratingScore": 5,
-  "ratingComment": "Lo arreglaron el mismo día."
-}
-
-### Go back to reported (409)
-PUT {{host}}/api/v1/incidents/1
+### Rate incident 1 again (409)
+POST {{host}}/api/v1/incidents/1/ratings
 Content-Type: application/json
 Accept-Language: es
 
 {
-  "status": "REPORTED"
+  "score": 4
 }
 
 ### Rate an incident that is not resolved (409)
-PUT {{host}}/api/v1/incidents/2
+POST {{host}}/api/v1/incidents/2/ratings
 Content-Type: application/json
 Accept-Language: es
 
 {
-  "status": "REPORTED",
-  "ratingScore": 4
+  "score": 4
 }
 
 ### Rating out of range (400)
-PUT {{host}}/api/v1/incidents/2
+POST {{host}}/api/v1/incidents/2/ratings
 Content-Type: application/json
 Accept-Language: en
 
 {
-  "status": "IN_PROGRESS",
-  "ratingScore": 6
+  "score": 6
 }
+
+### Start the management of an incident that does not exist (404)
+POST {{host}}/api/v1/incidents/999/management-starts
+Accept-Language: en
