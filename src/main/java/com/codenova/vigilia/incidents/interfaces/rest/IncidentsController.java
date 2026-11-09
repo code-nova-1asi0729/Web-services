@@ -10,12 +10,10 @@ import com.codenova.vigilia.incidents.domain.model.queries.GetIncidentsByBuildin
 import com.codenova.vigilia.incidents.interfaces.rest.resources.IncidentResource;
 import com.codenova.vigilia.incidents.interfaces.rest.resources.RateIncidentResource;
 import com.codenova.vigilia.incidents.interfaces.rest.resources.ReportIncidentResource;
-import com.codenova.vigilia.incidents.interfaces.rest.resources.UpdateIncidentResource;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.RateIncidentCommandFromResourceAssembler;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.ReportIncidentCommandFromResourceAssembler;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.ResponseEntityFromIncidentCommandResultAssembler;
 import com.codenova.vigilia.incidents.interfaces.rest.transform.ResponseEntityFromIncidentQueryResultAssembler;
-import com.codenova.vigilia.incidents.interfaces.rest.transform.UpdateIncidentCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -94,25 +92,6 @@ public class IncidentsController {
         if (incident.isEmpty())
             return ResponseEntityFromIncidentQueryResultAssembler.notFound(messageSource, "incident.error.notFoundById", incidentId);
         return ResponseEntityFromIncidentQueryResultAssembler.toResponseEntityFromEntity(incident.get());
-    }
-
-    @Operation(summary = "Change the status of an incident and, optionally, rate it")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Incident updated",
-                    content = @Content(schema = @Schema(implementation = IncidentResource.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "404", description = "Incident not found",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "409", description = "Invalid status change or rating not allowed",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
-    })
-    @PutMapping("/{incidentId}")
-    public ResponseEntity<?> updateIncident(@PathVariable Long incidentId,
-                                            @Valid @RequestBody UpdateIncidentResource resource) {
-        var command = UpdateIncidentCommandFromResourceAssembler.toCommandFromResource(incidentId, resource);
-        var result = incidentCommandService.handle(command);
-        return ResponseEntityFromIncidentCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
     }
 
     @Operation(summary = "Start managing a reported incident")

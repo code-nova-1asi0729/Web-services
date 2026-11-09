@@ -5,7 +5,6 @@ import com.codenova.vigilia.incidents.domain.model.commands.RateIncidentCommand;
 import com.codenova.vigilia.incidents.domain.model.commands.ReportIncidentCommand;
 import com.codenova.vigilia.incidents.domain.model.commands.ResolveIncidentCommand;
 import com.codenova.vigilia.incidents.domain.model.commands.StartIncidentManagementCommand;
-import com.codenova.vigilia.incidents.domain.model.commands.UpdateIncidentCommand;
 import com.codenova.vigilia.shared.application.patterns.Result;
 /**
  * Handles commands that change incidents
@@ -13,8 +12,6 @@ import com.codenova.vigilia.shared.application.patterns.Result;
 public interface IncidentCommandService {
 
     Result<Incident, IncidentCommandFailure> handle(ReportIncidentCommand command);
-
-    Result<Incident, IncidentCommandFailure> handle(UpdateIncidentCommand command);
 
     Result<Incident, IncidentCommandFailure> handle(StartIncidentManagementCommand command);
 
