@@ -69,19 +69,10 @@ public class Incident extends AbstractDomainAggregateRoot<Incident> {
     }
 
     public boolean resolve() {
-        if (status == IncidentStatus.RESOLVED) return false;
+        if (status != IncidentStatus.IN_PROGRESS) return false;
         this.status = IncidentStatus.RESOLVED;
         this.resolvedAt = Instant.now();
         return true;
-    }
-
-    public boolean changeStatus(IncidentStatus newStatus) {
-        if (newStatus == status) return true;
-        return switch (newStatus) {
-            case REPORTED -> false;
-            case IN_PROGRESS -> start();
-            case RESOLVED -> resolve();
-        };
     }
 
     public boolean rate(RatingScore score, String comment) {

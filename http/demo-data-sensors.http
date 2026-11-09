@@ -1,0 +1,133 @@
+### Demo data for sensors and readings. Run ONCE in prod, after the release with sensors.
+
+### Find the demo equipment by code
+GET {{host}}/api/v1/equipment
+Accept: application/json
+
+> {%
+    const byCode = (code) => response.body.find((equipment) => equipment.code === code).id;
+    client.global.set("pumpId", byCode("LP-WP-01"));
+    client.global.set("panelId", byCode("LP-EP-01"));
+    client.global.set("elevatorId", byCode("LP-EL-01"));
+    client.global.set("hvacId", byCode("MA-AC-01"));
+%}
+
+### Register vibration sensor of the water pump
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+
+{ "serialNumber": "VS-1001", "model": "VibroSense V2" }
+
+> {% client.global.set("pumpSensorId", response.body.id); %}
+
+### Register power sensor of the electrical panel
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+
+{ "serialNumber": "PS-3001", "model": "PowerSense P1" }
+
+> {% client.global.set("panelSensorId", response.body.id); %}
+
+### Register vibration sensor of the elevator
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+
+{ "serialNumber": "VS-1002", "model": "VibroSense V2" }
+
+> {% client.global.set("elevatorSensorId", response.body.id); %}
+
+### Register temperature sensor of the air conditioning
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+
+{ "serialNumber": "TS-2001", "model": "ThermoCheck T1" }
+
+> {% client.global.set("hvacSensorId", response.body.id); %}
+
+### Register a spare humidity sensor (stays unassigned)
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+
+{ "serialNumber": "HS-4001", "model": "HumiCheck H1" }
+
+### Assign sensor to the water pump
+POST {{host}}/api/v1/sensors/{{pumpSensorId}}/assignments
+Content-Type: application/json
+
+{ "equipmentId": {{pumpId}} }
+
+### Assign sensor to the electrical panel
+POST {{host}}/api/v1/sensors/{{panelSensorId}}/assignments
+Content-Type: application/json
+
+{ "equipmentId": {{panelId}} }
+
+### Assign sensor to the elevator
+POST {{host}}/api/v1/sensors/{{elevatorSensorId}}/assignments
+Content-Type: application/json
+
+{ "equipmentId": {{elevatorId}} }
+
+### Assign sensor to the air conditioning
+POST {{host}}/api/v1/sensors/{{hvacSensorId}}/assignments
+Content-Type: application/json
+
+{ "equipmentId": {{hvacId}} }
+
+### Water pump readings
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{pumpSensorId}}, "metric": "VIBRATION", "value": 2.1, "unit": "mm/s", "recordedAt": "2026-11-08T06:00:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{pumpSensorId}}, "metric": "VIBRATION", "value": 3.8, "unit": "mm/s", "recordedAt": "2026-11-08T12:00:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{pumpSensorId}}, "metric": "VIBRATION", "value": 6.4, "unit": "mm/s", "recordedAt": "2026-11-08T18:00:00Z" }
+
+### Electrical panel readings
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{panelSensorId}}, "metric": "POWER_CONSUMPTION", "value": 12.5, "unit": "kW", "recordedAt": "2026-11-08T08:00:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{panelSensorId}}, "metric": "POWER_CONSUMPTION", "value": 13.1, "unit": "kW", "recordedAt": "2026-11-08T20:00:00Z" }
+
+### Elevator readings
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{elevatorSensorId}}, "metric": "VIBRATION", "value": 4.9, "unit": "mm/s", "recordedAt": "2026-11-08T09:00:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{elevatorSensorId}}, "metric": "VIBRATION", "value": 7.2, "unit": "mm/s", "recordedAt": "2026-11-08T21:00:00Z" }
+
+### Air conditioning readings
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{hvacSensorId}}, "metric": "TEMPERATURE", "value": 22.4, "unit": "°C", "recordedAt": "2026-11-08T10:00:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{hvacSensorId}}, "metric": "TEMPERATURE", "value": 78.5, "unit": "°C", "recordedAt": "2026-11-08T22:00:00Z" }
+
+### Check the sensors
+GET {{host}}/api/v1/sensors
+Accept: application/json

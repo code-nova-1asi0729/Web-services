@@ -1,0 +1,79 @@
+### Get the first equipment to assign the sensor
+GET {{host}}/api/v1/equipment
+Accept: application/json
+
+> {% client.global.set("equipmentId", response.body[0].id); %}
+
+### Register sensor
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "serialNumber": "VS-9001",
+  "model": "VibroSense V2"
+}
+
+> {% client.global.set("sensorId", response.body.id); %}
+
+### Register the same serial number again (409)
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "serialNumber": "VS-9001",
+  "model": "VibroSense V2"
+}
+
+### Register with an invalid serial number, in Spanish (400)
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "serialNumber": "vs 9001",
+  "model": "VibroSense V2"
+}
+
+### Get all sensors
+GET {{host}}/api/v1/sensors
+Accept: application/json
+
+### Get sensor by id
+GET {{host}}/api/v1/sensors/{{sensorId}}
+Accept: application/json
+
+### Get a sensor that does not exist (404)
+GET {{host}}/api/v1/sensors/999999
+Accept-Language: en
+
+### Assign sensor to the equipment
+POST {{host}}/api/v1/sensors/{{sensorId}}/assignments
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{equipmentId}}
+}
+
+### Assign it again (409)
+POST {{host}}/api/v1/sensors/{{sensorId}}/assignments
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{equipmentId}}
+}
+
+### Get the sensors of the equipment
+GET {{host}}/api/v1/sensors?equipmentId={{equipmentId}}
+Accept: application/json
+
+### Release sensor
+POST {{host}}/api/v1/sensors/{{sensorId}}/releases
+Accept-Language: en
+
+### Release it again (409)
+POST {{host}}/api/v1/sensors/{{sensorId}}/releases
+Accept-Language: en
