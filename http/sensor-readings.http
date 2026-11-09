@@ -1,0 +1,113 @@
+### Get the first equipment
+GET {{host}}/api/v1/equipment
+Accept: application/json
+
+> {% client.global.set("equipmentId", response.body[0].id); %}
+
+### Register a sensor for the readings
+POST {{host}}/api/v1/sensors
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "serialNumber": "TS-9001",
+  "model": "ThermoCheck T1"
+}
+
+> {% client.global.set("readingSensorId", response.body.id); %}
+
+### Record a reading of a sensor that is not assigned (409)
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "sensorId": {{readingSensorId}},
+  "metric": "TEMPERATURE",
+  "value": 24.5,
+  "unit": "°C",
+  "recordedAt": "2026-11-07T10:00:00Z"
+}
+
+### Assign the sensor
+POST {{host}}/api/v1/sensors/{{readingSensorId}}/assignments
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "equipmentId": {{equipmentId}}
+}
+
+### Record a valid reading
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "sensorId": {{readingSensorId}},
+  "metric": "TEMPERATURE",
+  "value": 24.5,
+  "unit": "°C",
+  "recordedAt": "2026-11-07T10:00:00Z"
+}
+
+> {% client.global.set("readingId", response.body.id); %}
+
+### Record an impossible reading (201 with status INVALID)
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "sensorId": {{readingSensorId}},
+  "metric": "TEMPERATURE",
+  "value": 400,
+  "unit": "°C",
+  "recordedAt": "2026-11-07T11:00:00Z"
+}
+
+### Record a reading without unit, in Spanish (400)
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+Accept-Language: es
+
+{
+  "sensorId": {{readingSensorId}},
+  "metric": "TEMPERATURE",
+  "value": 24.5,
+  "unit": "",
+  "recordedAt": "2026-11-07T12:00:00Z"
+}
+
+### Record a reading of a sensor that does not exist (404)
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "sensorId": 999999,
+  "metric": "TEMPERATURE",
+  "value": 24.5,
+  "unit": "°C",
+  "recordedAt": "2026-11-07T12:00:00Z"
+}
+
+### The sensor is now MONITORING_ACTIVE with lastSeenAt
+GET {{host}}/api/v1/sensors/{{readingSensorId}}
+Accept: application/json
+
+### Readings of the equipment, the most recent first
+GET {{host}}/api/v1/sensor-readings?equipmentId={{equipmentId}}
+Accept: application/json
+
+### All readings
+GET {{host}}/api/v1/sensor-readings
+Accept: application/json
+
+### Reading by id
+GET {{host}}/api/v1/sensor-readings/{{readingId}}
+Accept: application/json
+
+### Reading that does not exist (404)
+GET {{host}}/api/v1/sensor-readings/999999
+Accept-Language: en
