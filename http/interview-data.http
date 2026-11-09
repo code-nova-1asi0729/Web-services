@@ -1,0 +1,106 @@
+### Data for one day of validation interviews: 6 active alerts and 3 resolved incidents to rate.
+### Run it in prod before each day of interviews. It can be run more than once.
+
+### Find the demo buildings by code
+GET {{host}}/api/v1/buildings
+Accept: application/json
+
+> {%
+    const byCode = (code) => response.body.find((building) => building.code === code).id;
+    client.global.set("losPinosId", byCode("LP-01"));
+    client.global.set("marAzulId", byCode("MA-02"));
+%}
+
+### Find the demo equipment by code
+GET {{host}}/api/v1/equipment
+Accept: application/json
+
+> {%
+    const byCode = (code) => response.body.find((equipment) => equipment.code === code).id;
+    client.global.set("pumpId", byCode("LP-WP-01"));
+    client.global.set("panelId", byCode("LP-EP-01"));
+    client.global.set("elevatorId", byCode("LP-EL-01"));
+    client.global.set("hvacId", byCode("MA-AC-01"));
+%}
+
+### CRITICAL alert on the elevator
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+
+{ "equipmentId": {{elevatorId}}, "metric": "VIBRATION", "severity": "CRITICAL", "lastValue": 11.4 }
+
+### CRITICAL alert on the water pump
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+
+{ "equipmentId": {{pumpId}}, "metric": "VIBRATION", "severity": "CRITICAL", "lastValue": 9.8 }
+
+### HIGH alert on the air conditioning
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+
+{ "equipmentId": {{hvacId}}, "metric": "TEMPERATURE", "severity": "HIGH", "lastValue": 81.2 }
+
+### HIGH alert on the electrical panel
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+
+{ "equipmentId": {{panelId}}, "metric": "POWER_CONSUMPTION", "severity": "HIGH", "lastValue": 18.6 }
+
+### MEDIUM alert on the air conditioning
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+
+{ "equipmentId": {{hvacId}}, "metric": "HUMIDITY", "severity": "MEDIUM", "lastValue": 74.0 }
+
+### LOW alert on the electrical panel
+POST {{host}}/api/v1/alerts
+Content-Type: application/json
+
+{ "equipmentId": {{panelId}}, "metric": "TEMPERATURE", "severity": "LOW", "lastValue": 41.5 }
+
+### Incident 1 to rate: report
+POST {{host}}/api/v1/incidents
+Content-Type: application/json
+
+{ "buildingId": {{losPinosId}}, "residentId": 5, "equipmentId": {{pumpId}}, "category": "WATER", "description": "No hay agua en el piso 6 desde la mañana." }
+
+> {% client.global.set("rateIncident1", response.body.id); %}
+
+### Incident 1 to rate: start management
+POST {{host}}/api/v1/incidents/{{rateIncident1}}/management-starts
+
+### Incident 1 to rate: resolve
+POST {{host}}/api/v1/incidents/{{rateIncident1}}/resolutions
+
+### Incident 2 to rate: report
+POST {{host}}/api/v1/incidents
+Content-Type: application/json
+
+{ "buildingId": {{losPinosId}}, "residentId": 6, "equipmentId": {{elevatorId}}, "category": "ELEVATOR", "description": "El ascensor se detuvo entre el piso 3 y el 4." }
+
+> {% client.global.set("rateIncident2", response.body.id); %}
+
+### Incident 2 to rate: start management
+POST {{host}}/api/v1/incidents/{{rateIncident2}}/management-starts
+
+### Incident 2 to rate: resolve
+POST {{host}}/api/v1/incidents/{{rateIncident2}}/resolutions
+
+### Incident 3 to rate: report
+POST {{host}}/api/v1/incidents
+Content-Type: application/json
+
+{ "buildingId": {{marAzulId}}, "residentId": 8, "category": "ELECTRICITY", "description": "Se apagan las luces del pasillo del segundo piso." }
+
+> {% client.global.set("rateIncident3", response.body.id); %}
+
+### Incident 3 to rate: start management
+POST {{host}}/api/v1/incidents/{{rateIncident3}}/management-starts
+
+### Incident 3 to rate: resolve
+POST {{host}}/api/v1/incidents/{{rateIncident3}}/resolutions
+
+### Check the active alerts
+GET {{host}}/api/v1/alerts?status=ACTIVE
+Accept: application/json
