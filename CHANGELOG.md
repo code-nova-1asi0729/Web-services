@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-09
+
+### Added
+
+- Asset Monitoring: register, assign, release and query IoT sensors.
+- Asset Monitoring: record and query sensor readings, marked as invalid when the value is physically impossible.
+- Incidents: start the management of, resolve and rate incidents through the `management-starts`, `resolutions` and `ratings` endpoints.
+- HTTP requests for sensors, sensor readings, sensor demo data and validation interview data.
+
+### Changed
+
+- An incident can be resolved only after its management starts.
+
+### Removed
+
+- Generic `PUT /api/v1/incidents/{incidentId}` endpoint.
+
 ## [0.1.0] - 2026-11-07
 
 ### Added
