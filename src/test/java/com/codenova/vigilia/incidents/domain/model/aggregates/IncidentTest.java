@@ -16,26 +16,34 @@ class IncidentTest {
     }
 
     @Test
-    void startsAsReportedAndCanBeResolved() {
+    void goesFromReportedToInProgressToResolved() {
         var incident = newIncident();
         assertEquals(IncidentStatus.REPORTED, incident.getStatus());
-        assertTrue(incident.changeStatus(IncidentStatus.IN_PROGRESS));
-        assertTrue(incident.changeStatus(IncidentStatus.RESOLVED));
+        assertTrue(incident.start());
+        assertTrue(incident.resolve());
+        assertEquals(IncidentStatus.RESOLVED, incident.getStatus());
         assertNotNull(incident.getResolvedAt());
     }
 
     @Test
-    void cannotGoBackToReported() {
+    void cannotBeResolvedBeforeItsManagementStarts() {
+        var incident = newIncident();
+        assertFalse(incident.resolve());
+        assertEquals(IncidentStatus.REPORTED, incident.getStatus());
+    }
+
+    @Test
+    void managementCanStartOnlyOnce() {
         var incident = newIncident();
         incident.start();
-        assertFalse(incident.changeStatus(IncidentStatus.REPORTED));
-        assertEquals(IncidentStatus.IN_PROGRESS, incident.getStatus());
+        assertFalse(incident.start());
     }
 
     @Test
     void canOnlyBeRatedOnceAfterResolved() {
         var incident = newIncident();
         assertFalse(incident.rate(new RatingScore(5), null));
+        incident.start();
         incident.resolve();
         assertTrue(incident.rate(new RatingScore(5), "Muy rápido."));
         assertFalse(incident.rate(new RatingScore(1), null));

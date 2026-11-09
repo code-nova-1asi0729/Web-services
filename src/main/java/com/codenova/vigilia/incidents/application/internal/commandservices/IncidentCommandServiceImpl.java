@@ -3,9 +3,10 @@ package com.codenova.vigilia.incidents.application.internal.commandservices;
 import com.codenova.vigilia.incidents.application.commandservices.IncidentCommandFailure;
 import com.codenova.vigilia.incidents.application.commandservices.IncidentCommandService;
 import com.codenova.vigilia.incidents.domain.model.aggregates.Incident;
+import com.codenova.vigilia.incidents.domain.model.commands.RateIncidentCommand;
 import com.codenova.vigilia.incidents.domain.model.commands.ReportIncidentCommand;
-import com.codenova.vigilia.incidents.domain.model.commands.UpdateIncidentCommand;
-import com.codenova.vigilia.incidents.domain.model.valueobjects.IncidentStatus;
+import com.codenova.vigilia.incidents.domain.model.commands.ResolveIncidentCommand;
+import com.codenova.vigilia.incidents.domain.model.commands.StartIncidentManagementCommand;
 import com.codenova.vigilia.incidents.domain.repositories.IncidentRepository;
 import com.codenova.vigilia.shared.application.patterns.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -33,25 +34,40 @@ public class IncidentCommandServiceImpl implements IncidentCommandService {
 
     @Override
     @Transactional
-    public Result<Incident, IncidentCommandFailure> handle(UpdateIncidentCommand command) {
-        var result = incidentRepository.findById(command.incidentId());
-        if (result.isEmpty()) {
-            log.warn("Incident not found: id={}", command.incidentId());
-            return Result.failure(new IncidentCommandFailure.NotFound());
-        }
-        var incident = result.get();
-        var wantsRating = command.ratingScore() != null && !incident.isRated();
-        if (wantsRating && command.status() != IncidentStatus.RESOLVED) {
-            log.warn("Rating not allowed: id={}, status={}", incident.getId(), command.status());
-            return Result.failure(new IncidentCommandFailure.RatingNotAllowed());
-        }
-        if (!incident.changeStatus(command.status())) {
-            log.warn("Invalid transition: id={}, from={}, to={}", incident.getId(), incident.getStatus(), command.status());
+    public Result<Incident, IncidentCommandFailure> handle(StartIncidentManagementCommand command) {
+        var incident = incidentRepository.findById(command.incidentId());
+        if (incident.isEmpty()) return Result.failure(new IncidentCommandFailure.NotFound());
+        if (!incident.get().start()) {
+            log.warn("Invalid transition: id={}, from={}", command.incidentId(), incident.get().getStatus());
             return Result.failure(new IncidentCommandFailure.InvalidStatusTransition());
         }
-        if (wantsRating) incident.rate(command.ratingScore(), command.ratingComment());
-        var updated = incidentRepository.save(incident);
-        log.info("Incident updated: id={}, status={}", updated.getId(), updated.getStatus());
-        return Result.success(updated);
+        log.info("Incident management started: id={}", command.incidentId());
+        return Result.success(incidentRepository.save(incident.get()));
+    }
+
+    @Override
+    @Transactional
+    public Result<Incident, IncidentCommandFailure> handle(ResolveIncidentCommand command) {
+        var incident = incidentRepository.findById(command.incidentId());
+        if (incident.isEmpty()) return Result.failure(new IncidentCommandFailure.NotFound());
+        if (!incident.get().resolve()) {
+            log.warn("Invalid transition: id={}, from={}", command.incidentId(), incident.get().getStatus());
+            return Result.failure(new IncidentCommandFailure.InvalidStatusTransition());
+        }
+        log.info("Incident resolved: id={}", command.incidentId());
+        return Result.success(incidentRepository.save(incident.get()));
+    }
+
+    @Override
+    @Transactional
+    public Result<Incident, IncidentCommandFailure> handle(RateIncidentCommand command) {
+        var incident = incidentRepository.findById(command.incidentId());
+        if (incident.isEmpty()) return Result.failure(new IncidentCommandFailure.NotFound());
+        if (!incident.get().rate(command.score(), command.comment())) {
+            log.warn("Rating not allowed: id={}, status={}", command.incidentId(), incident.get().getStatus());
+            return Result.failure(new IncidentCommandFailure.RatingNotAllowed());
+        }
+        log.info("Incident rated: id={}, score={}", command.incidentId(), command.score().value());
+        return Result.success(incidentRepository.save(incident.get()));
     }
 }
