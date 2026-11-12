@@ -1,4 +1,4 @@
 package com.codenova.vigilia.assetmonitoring.domain.model.queries;
 
-public record GetAllEquipmentQuery() {
+public record GetAllDevicesQuery() {
 }
