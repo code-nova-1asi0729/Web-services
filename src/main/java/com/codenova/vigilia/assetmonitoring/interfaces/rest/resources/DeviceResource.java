@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
 @Schema(description = "Critical equipment")
-public record EquipmentResource(
+public record DeviceResource(
         @Schema(description = "Equipment identifier", example = "1")
         Long id,
 

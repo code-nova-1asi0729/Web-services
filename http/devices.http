@@ -1,5 +1,5 @@
-### Register equipment
-POST {{host}}/api/v1/equipment
+### Register device
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -12,8 +12,8 @@ Accept-Language: en
   "installationDate": "2021-03-15"
 }
 
-### Register equipment
-POST {{host}}/api/v1/equipment
+### Register device
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -26,8 +26,8 @@ Accept-Language: en
   "installationDate": "2020-08-10"
 }
 
-### Register equipment
-POST {{host}}/api/v1/equipment
+### Register device
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -40,20 +40,20 @@ Accept-Language: en
   "installationDate": "2019-05-20"
 }
 
-### Get all equipment
-GET {{host}}/api/v1/equipment
+### Get all devices
+GET {{host}}/api/v1/devices
 Accept-Language: en
 
-### Get equipment by building
-GET {{host}}/api/v1/equipment?buildingId=1
+### Get devices by building
+GET {{host}}/api/v1/devices?buildingId=1
 Accept-Language: es
 
-### Get equipment by id
-GET {{host}}/api/v1/equipment/1
+### Get device by id
+GET {{host}}/api/v1/devices/1
 Accept-Language: en
 
-### Modify equipment
-PUT {{host}}/api/v1/equipment/1
+### Modify device
+PUT {{host}}/api/v1/devices/1
 Content-Type: application/json
 Accept-Language: en
 

@@ -1,6 +1,6 @@
 # Vigilia Platform API
 
-Backend of **Vigilia**, the preventive maintenance platform by CodeNova for critical equipment in residential buildings, monitored with IoT sensors.
+Backend of **Vigilia**, the preventive maintenance platform by CodeNova for critical devices in residential buildings, monitored with IoT sensors.
 
 This repository exposes the RESTful API consumed by the Vigilia frontend application.
 
