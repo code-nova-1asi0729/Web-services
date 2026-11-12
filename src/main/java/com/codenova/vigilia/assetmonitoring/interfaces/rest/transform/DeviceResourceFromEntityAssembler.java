@@ -1,12 +1,12 @@
 package com.codenova.vigilia.assetmonitoring.interfaces.rest.transform;
 
-import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.CriticalEquipment;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.EquipmentResource;
+import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Device;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.DeviceResource;
 
-public class EquipmentResourceFromEntityAssembler {
+public class DeviceResourceFromEntityAssembler {
 
-    public static EquipmentResource toResourceFromEntity(CriticalEquipment entity) {
-        return new EquipmentResource(
+    public static DeviceResource toResourceFromEntity(Device entity) {
+        return new DeviceResource(
                 entity.getId(),
                 entity.getBuildingId(),
                 entity.getCode().value(),

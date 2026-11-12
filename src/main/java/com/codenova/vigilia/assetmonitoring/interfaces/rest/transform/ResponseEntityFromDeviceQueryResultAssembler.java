@@ -1,7 +1,7 @@
 package com.codenova.vigilia.assetmonitoring.interfaces.rest.transform;
 
-import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.CriticalEquipment;
-import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.EquipmentResource;
+import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Device;
+import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.DeviceResource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -10,15 +10,15 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public class ResponseEntityFromEquipmentQueryResultAssembler {
+public class ResponseEntityFromDeviceQueryResultAssembler {
 
-    public static ResponseEntity<EquipmentResource> toResponseEntityFromEntity(CriticalEquipment equipment) {
-        return ResponseEntity.ok(EquipmentResourceFromEntityAssembler.toResourceFromEntity(equipment));
+    public static ResponseEntity<DeviceResource> toResponseEntityFromEntity(Device device) {
+        return ResponseEntity.ok(DeviceResourceFromEntityAssembler.toResourceFromEntity(device));
     }
 
-    public static ResponseEntity<List<EquipmentResource>> toResponseEntityFromList(List<CriticalEquipment> equipment) {
-        var resources = equipment.stream()
-                .map(EquipmentResourceFromEntityAssembler::toResourceFromEntity)
+    public static ResponseEntity<List<DeviceResource>> toResponseEntityFromList(List<Device> devices) {
+        var resources = devices.stream()
+                .map(DeviceResourceFromEntityAssembler::toResourceFromEntity)
                 .toList();
         return ResponseEntity.ok(resources);
     }
