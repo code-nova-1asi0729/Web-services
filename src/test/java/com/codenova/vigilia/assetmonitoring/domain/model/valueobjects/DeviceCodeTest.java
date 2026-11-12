@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class EquipmentCodeTest {
+class DeviceCodeTest {
 
     @Test
     void acceptsValidCode() {
-        assertEquals("LP-WP-01", new EquipmentCode("LP-WP-01").value());
+        assertEquals("LP-WP-01", new DeviceCode("LP-WP-01").value());
     }
 
     @Test
     void rejectsLowercaseCode() {
-        assertThrows(IllegalArgumentException.class, () -> new EquipmentCode("lp-wp-01"));
+        assertThrows(IllegalArgumentException.class, () -> new DeviceCode("lp-wp-01"));
     }
 }
