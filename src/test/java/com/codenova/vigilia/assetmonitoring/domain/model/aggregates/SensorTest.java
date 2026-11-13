@@ -16,14 +16,14 @@ class SensorTest {
     }
 
     @Test
-    void isRegisteredWithoutEquipment() {
+    void isRegisteredWithoutDevice() {
         var sensor = newSensor();
         assertEquals(SensorStatus.UNASSIGNED, sensor.getStatus());
         assertFalse(sensor.isAssigned());
     }
 
     @Test
-    void canBeAssignedToOnlyOneEquipmentAtATime() {
+    void canBeAssignedToOnlyOneDeviceAtATime() {
         var sensor = newSensor();
         assertTrue(sensor.assignTo(1L));
         assertEquals(SensorStatus.ASSIGNED, sensor.getStatus());

@@ -14,7 +14,7 @@ class SensorReadingTest {
     private static final Instant RECORDED_AT = Instant.parse("2026-11-07T12:00:00Z");
 
     @Test
-    void takesTheEquipmentFromTheSensorAssignment() {
+    void takesTheDeviceFromTheSensorAssignment() {
         var reading = new SensorReading(new RecordReadingCommand(1L, MetricType.VIBRATION, 2.3, "mm/s", RECORDED_AT), 5L);
         assertEquals(5L, reading.getDeviceId());
         assertEquals(ReadingStatus.VALID, reading.getStatus());
@@ -24,8 +24,17 @@ class SensorReadingTest {
     void isInvalidWhenTheValueIsPhysicallyImpossible() {
         var humidity = new SensorReading(new RecordReadingCommand(1L, MetricType.HUMIDITY, 120.0, "%", RECORDED_AT), 5L);
         var vibration = new SensorReading(new RecordReadingCommand(1L, MetricType.VIBRATION, -1.0, "mm/s", RECORDED_AT), 5L);
+        var pressure = new SensorReading(new RecordReadingCommand(1L, MetricType.PRESSURE, -0.5, "bar", RECORDED_AT), 5L);
         assertFalse(humidity.isValid());
         assertFalse(vibration.isValid());
+        assertFalse(pressure.isValid());
+    }
+
+    @Test
+    void acceptsCurrentReadings() {
+        var current = new SensorReading(new RecordReadingCommand(1L, MetricType.CURRENT, 8.2, "A", RECORDED_AT), 5L);
+        assertTrue(current.isValid());
+        assertEquals(MetricType.CURRENT, current.getMetric());
     }
 
     @Test
