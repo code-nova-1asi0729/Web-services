@@ -1,11 +1,11 @@
 ### Demo data for sensors and readings. Run ONCE in prod, after the release with sensors.
 
-### Find the demo equipment by code
-GET {{host}}/api/v1/equipment
+### Find the demo devices by code
+GET {{host}}/api/v1/devices
 Accept: application/json
 
 > {%
-    const byCode = (code) => response.body.find((equipment) => equipment.code === code).id;
+    const byCode = (code) => response.body.find((device) => device.code === code).id;
     client.global.set("pumpId", byCode("LP-WP-01"));
     client.global.set("panelId", byCode("LP-EP-01"));
     client.global.set("elevatorId", byCode("LP-EL-01"));
@@ -54,25 +54,25 @@ Content-Type: application/json
 POST {{host}}/api/v1/sensors/{{pumpSensorId}}/assignments
 Content-Type: application/json
 
-{ "equipmentId": {{pumpId}} }
+{ "deviceId": {{pumpId}} }
 
 ### Assign sensor to the electrical panel
 POST {{host}}/api/v1/sensors/{{panelSensorId}}/assignments
 Content-Type: application/json
 
-{ "equipmentId": {{panelId}} }
+{ "deviceId": {{panelId}} }
 
 ### Assign sensor to the elevator
 POST {{host}}/api/v1/sensors/{{elevatorSensorId}}/assignments
 Content-Type: application/json
 
-{ "equipmentId": {{elevatorId}} }
+{ "deviceId": {{elevatorId}} }
 
 ### Assign sensor to the air conditioning
 POST {{host}}/api/v1/sensors/{{hvacSensorId}}/assignments
 Content-Type: application/json
 
-{ "equipmentId": {{hvacId}} }
+{ "deviceId": {{hvacId}} }
 
 ### Water pump readings
 POST {{host}}/api/v1/sensor-readings
@@ -91,6 +91,24 @@ POST {{host}}/api/v1/sensor-readings
 Content-Type: application/json
 
 { "sensorId": {{pumpSensorId}}, "metric": "VIBRATION", "value": 6.4, "unit": "mm/s", "recordedAt": "2026-11-08T18:00:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{pumpSensorId}}, "metric": "CURRENT", "value": 8.2, "unit": "A", "recordedAt": "2026-11-08T18:05:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{pumpSensorId}}, "metric": "PRESSURE", "value": 3.1, "unit": "bar", "recordedAt": "2026-11-08T18:05:00Z" }
+
+###
+POST {{host}}/api/v1/sensor-readings
+Content-Type: application/json
+
+{ "sensorId": {{pumpSensorId}}, "metric": "TEMPERATURE", "value": 58, "unit": "°C", "recordedAt": "2026-11-08T18:05:00Z" }
 
 ### Electrical panel readings
 POST {{host}}/api/v1/sensor-readings
