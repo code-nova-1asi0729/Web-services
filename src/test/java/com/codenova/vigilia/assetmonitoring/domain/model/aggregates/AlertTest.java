@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AlertTest {
 
     private Alert newAlert() {
-        return new Alert(new RaiseAlertCommand(2L, MetricType.TEMPERATURE, AlertSeverity.HIGH, 78.5));
+        return new Alert(new RaiseAlertCommand(2L, MetricType.TEMPERATURE, AlertSeverity.HIGH, 78.5, 60.0));
     }
 
     @Test
@@ -44,5 +44,17 @@ class AlertTest {
         var alert = newAlert();
         alert.acknowledge();
         assertFalse(alert.acknowledge());
+    }
+
+    @Test
+    void exceedRatioIsLastValueOverThreshold() {
+        var alert = new Alert(new RaiseAlertCommand(1L, MetricType.VIBRATION, AlertSeverity.CRITICAL, 9.0, 4.5));
+        assertEquals(2.0, alert.exceedRatio());
+    }
+
+    @Test
+    void zeroThresholdValueIsRejected() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new RaiseAlertCommand(1L, MetricType.VIBRATION, AlertSeverity.CRITICAL, 9.0, 0.0));
     }
 }
