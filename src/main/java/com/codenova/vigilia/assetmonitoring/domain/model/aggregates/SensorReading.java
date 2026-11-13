@@ -60,7 +60,7 @@ public class SensorReading extends AbstractDomainAggregateRoot<SensorReading> {
         return switch (metric) {
             case TEMPERATURE -> value >= -40 && value <= 150;
             case HUMIDITY -> value >= 0 && value <= 100;
-            case VIBRATION, POWER_CONSUMPTION -> value >= 0;
+            case VIBRATION, POWER_CONSUMPTION, CURRENT, PRESSURE -> value >= 0;
         };
     }
 }
