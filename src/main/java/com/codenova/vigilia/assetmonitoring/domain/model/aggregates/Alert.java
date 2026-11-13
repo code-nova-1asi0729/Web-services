@@ -9,13 +9,13 @@ import lombok.Getter;
 
 import java.time.Instant;
 /**
- * Early warning raised when a reading of a critical equipment is out of range.
+ * Early warning raised when a reading of a device is out of range.
  */
 @Getter
 public class Alert extends AbstractDomainAggregateRoot<Alert> {
 
     private Long id;
-    private Long equipmentId;
+    private Long deviceId;
     private MetricType metric;
     private AlertSeverity severity;
     private AlertStatus status;
@@ -26,7 +26,7 @@ public class Alert extends AbstractDomainAggregateRoot<Alert> {
     private Alert() {}
 
     public Alert(RaiseAlertCommand command) {
-        this.equipmentId = command.equipmentId();
+        this.deviceId = command.deviceId();
         this.metric = command.metric();
         this.severity = command.severity();
         this.lastValue = command.lastValue();
@@ -34,11 +34,11 @@ public class Alert extends AbstractDomainAggregateRoot<Alert> {
         this.detectedAt = Instant.now();
     }
 
-    public static Alert reconstitute(Long id, Long equipmentId, MetricType metric, AlertSeverity severity,
+    public static Alert reconstitute(Long id, Long deviceId, MetricType metric, AlertSeverity severity,
                                      AlertStatus status, Double lastValue, Instant detectedAt, Instant resolvedAt) {
         var alert = new Alert();
         alert.id = id;
-        alert.equipmentId = equipmentId;
+        alert.deviceId = deviceId;
         alert.metric = metric;
         alert.severity = severity;
         alert.status = status;

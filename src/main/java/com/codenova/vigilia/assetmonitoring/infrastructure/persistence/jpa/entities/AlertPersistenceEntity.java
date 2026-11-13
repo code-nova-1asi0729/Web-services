@@ -22,7 +22,7 @@ import java.time.Instant;
 public class AlertPersistenceEntity extends AuditableAbstractPersistenceEntity {
 
     @Column(nullable = false)
-    private Long equipmentId;
+    private Long deviceId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -9,7 +9,7 @@ public class AlertResourceFromEntityAssembler {
     public static AlertResource toResourceFromEntity(Alert entity) {
         return new AlertResource(
                 entity.getId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getMetric().name(),
                 entity.getSeverity().name(),
                 entity.getStatus().name(),

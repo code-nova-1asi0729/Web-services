@@ -10,8 +10,8 @@ import java.time.Instant;
 public record AlertResource(
         @Schema(description = "Alert identifier", example = "1")
         Long id,
-        @Schema(description = "Critical equipment identifier", example = "2")
-        Long equipmentId,
+        @Schema(description = "Device identifier", example = "2")
+        Long deviceId,
         @Schema(description = "Measured magnitude", example = "TEMPERATURE")
         String metric,
         @Schema(description = "How serious it is", example = "HIGH")

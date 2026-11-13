@@ -8,7 +8,7 @@ import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.RaiseAlert
 public class RaiseAlertCommandFromResourceAssembler {
     public static RaiseAlertCommand toCommandFromResource(RaiseAlertResource resource) {
         return new RaiseAlertCommand(
-                resource.equipmentId(),
+                resource.deviceId(),
                 resource.metric(),
                 resource.severity(),
                 resource.lastValue());
