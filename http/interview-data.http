@@ -27,37 +27,37 @@ Accept: application/json
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 
-{ "equipmentId": {{elevatorId}}, "metric": "VIBRATION", "severity": "CRITICAL", "lastValue": 11.4 }
+{ "deviceId": {{elevatorId}}, "metric": "VIBRATION", "severity": "CRITICAL", "lastValue": 11.4, "thresholdValue": 4.5 }
 
 ### CRITICAL alert on the water pump
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 
-{ "equipmentId": {{pumpId}}, "metric": "VIBRATION", "severity": "CRITICAL", "lastValue": 9.8 }
+{ "deviceId": {{pumpId}}, "metric": "VIBRATION", "severity": "CRITICAL", "lastValue": 9.8, "thresholdValue": 4.5 }
 
 ### HIGH alert on the air conditioning
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 
-{ "equipmentId": {{hvacId}}, "metric": "TEMPERATURE", "severity": "HIGH", "lastValue": 81.2 }
+{ "deviceId": {{hvacId}}, "metric": "TEMPERATURE", "severity": "HIGH", "lastValue": 81.2, "thresholdValue": 60.0 }
 
 ### HIGH alert on the electrical panel
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 
-{ "equipmentId": {{panelId}}, "metric": "POWER_CONSUMPTION", "severity": "HIGH", "lastValue": 18.6 }
+{ "deviceId": {{panelId}}, "metric": "POWER_CONSUMPTION", "severity": "HIGH", "lastValue": 18.6, "thresholdValue": 10.0 }
 
 ### MEDIUM alert on the air conditioning
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 
-{ "equipmentId": {{hvacId}}, "metric": "HUMIDITY", "severity": "MEDIUM", "lastValue": 74.0 }
+{ "deviceId": {{hvacId}}, "metric": "HUMIDITY", "severity": "MEDIUM", "lastValue": 74.0, "thresholdValue": 60.0 }
 
 ### LOW alert on the electrical panel
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 
-{ "equipmentId": {{panelId}}, "metric": "TEMPERATURE", "severity": "LOW", "lastValue": 41.5 }
+{ "deviceId": {{panelId}}, "metric": "TEMPERATURE", "severity": "LOW", "lastValue": 41.5, "thresholdValue": 40.0 }
 
 ### Incident 1 to rate: report
 POST {{host}}/api/v1/incidents
