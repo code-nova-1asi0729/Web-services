@@ -9,14 +9,14 @@ import lombok.Getter;
 import java.time.Instant;
 
 /**
- * Value measured by a sensor on a critical equipment at a given moment.
+ * Value measured by a sensor on a device at a given moment.
  */
 @Getter
 public class SensorReading extends AbstractDomainAggregateRoot<SensorReading> {
 
     private Long id;
     private Long sensorId;
-    private Long equipmentId;
+    private Long deviceId;
     private MetricType metric;
     private Double value;
     private String unit;
@@ -26,11 +26,11 @@ public class SensorReading extends AbstractDomainAggregateRoot<SensorReading> {
     private SensorReading() {}
 
     /**
-     * Records a reading of a sensor. The equipment comes from the sensor assignment.
+     * Records a reading of a sensor. The device comes from the sensor assignment.
      */
-    public SensorReading(RecordReadingCommand command, Long equipmentId) {
+    public SensorReading(RecordReadingCommand command, Long deviceId) {
         this.sensorId = command.sensorId();
-        this.equipmentId = equipmentId;
+        this.deviceId = deviceId;
         this.metric = command.metric();
         this.value = command.value();
         this.unit = command.unit();
@@ -38,12 +38,12 @@ public class SensorReading extends AbstractDomainAggregateRoot<SensorReading> {
         this.status = isPhysicallyPossible(command.metric(), command.value()) ? ReadingStatus.VALID : ReadingStatus.INVALID;
     }
 
-    public static SensorReading reconstitute(Long id, Long sensorId, Long equipmentId, MetricType metric, Double value,
+    public static SensorReading reconstitute(Long id, Long sensorId, Long deviceId, MetricType metric, Double value,
                                              String unit, ReadingStatus status, Instant recordedAt) {
         var reading = new SensorReading();
         reading.id = id;
         reading.sensorId = sensorId;
-        reading.equipmentId = equipmentId;
+        reading.deviceId = deviceId;
         reading.metric = metric;
         reading.value = value;
         reading.unit = unit;

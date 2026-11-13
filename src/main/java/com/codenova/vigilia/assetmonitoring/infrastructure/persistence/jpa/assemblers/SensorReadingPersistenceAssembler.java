@@ -15,7 +15,7 @@ public final class SensorReadingPersistenceAssembler {
         return SensorReading.reconstitute(
                 entity.getId(),
                 entity.getSensorId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getMetric(),
                 entity.getValue(),
                 entity.getUnit(),
@@ -27,7 +27,7 @@ public final class SensorReadingPersistenceAssembler {
         var entity = new SensorReadingPersistenceEntity();
         if (reading.getId() != null) entity.setId(reading.getId());
         entity.setSensorId(reading.getSensorId());
-        entity.setEquipmentId(reading.getEquipmentId());
+        entity.setDeviceId(reading.getDeviceId());
         entity.setMetric(reading.getMetric());
         entity.setValue(reading.getValue());
         entity.setUnit(reading.getUnit());

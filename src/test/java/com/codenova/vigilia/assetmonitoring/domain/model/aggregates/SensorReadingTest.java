@@ -16,7 +16,7 @@ class SensorReadingTest {
     @Test
     void takesTheEquipmentFromTheSensorAssignment() {
         var reading = new SensorReading(new RecordReadingCommand(1L, MetricType.VIBRATION, 2.3, "mm/s", RECORDED_AT), 5L);
-        assertEquals(5L, reading.getEquipmentId());
+        assertEquals(5L, reading.getDeviceId());
         assertEquals(ReadingStatus.VALID, reading.getStatus());
     }
 

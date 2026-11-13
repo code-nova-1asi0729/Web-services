@@ -9,7 +9,7 @@ public class SensorReadingResourceFromEntityAssembler {
         return new SensorReadingResource(
                 entity.getId(),
                 entity.getSensorId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getMetric().name(),
                 entity.getValue(),
                 entity.getUnit(),
