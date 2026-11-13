@@ -1,4 +1,4 @@
-### Report incident with equipment (201)
+### Report incident with a device (201)
 POST {{host}}/api/v1/incidents
 Content-Type: application/json
 Accept-Language: en
@@ -6,12 +6,12 @@ Accept-Language: en
 {
   "buildingId": 1,
   "residentId": 3,
-  "equipmentId": 3,
+  "deviceId": 3,
   "category": "ELEVATOR",
   "description": "El ascensor de la torre A hace un ruido fuerte al subir."
 }
 
-### Report incident without equipment (201)
+### Report incident without a device (201)
 POST {{host}}/api/v1/incidents
 Content-Type: application/json
 Accept-Language: en
