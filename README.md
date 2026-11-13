@@ -4,6 +4,15 @@ Backend of **Vigilia**, the preventive maintenance platform by CodeNova for crit
 
 This repository exposes the RESTful API consumed by the Vigilia frontend application.
 
+## Related repositories
+
+| Repository | Description |
+| --- | --- |
+| [Web-services](https://github.com/code-nova-1asi0729/Web-services) | RESTful API (this repository) |
+| [Web-App](https://github.com/code-nova-1asi0729/Web-App) | Angular frontend application |
+| [Website](https://github.com/code-nova-1asi0729/Website) | Landing page, published at https://code-nova-1asi0729.github.io/Website/ |
+| [project-report](https://github.com/code-nova-1asi0729/project-report) | Project report |
+
 ## Tech stack
 
 - Java 27
