@@ -21,9 +21,9 @@ public record ReportIncidentResource(
         @Positive(message = "{incident.error.residentId.invalid}")
         Long residentId,
 
-        @Schema(description = "Related critical equipment, optional", example = "3")
-        @Positive(message = "{incident.error.equipmentId.invalid}")
-        Long equipmentId,
+        @Schema(description = "Related device, optional", example = "3")
+        @Positive(message = "{incident.error.deviceId.invalid}")
+        Long deviceId,
 
         @Schema(description = "Type of problem", example = "ELEVATOR")
         @NotNull(message = "{incident.error.category.notNull}")
