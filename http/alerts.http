@@ -1,37 +1,40 @@
-### Raise HIGH alert on equipment 2 (201)
+### Raise HIGH alert on device 2 (201)
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": 2,
+  "deviceId": 2,
   "metric": "TEMPERATURE",
   "severity": "HIGH",
-  "lastValue": 78.5
+  "lastValue": 78.5,
+  "thresholdValue": 60.0
 }
 
-### Raise MEDIUM alert on equipment 1 (201)
+### Raise MEDIUM alert on device 1 (201)
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": 1,
+  "deviceId": 1,
   "metric": "VIBRATION",
   "severity": "MEDIUM",
-  "lastValue": 7.2
+  "lastValue": 7.2,
+  "thresholdValue": 4.5
 }
 
-### Raise CRITICAL alert on equipment 3 (201)
+### Raise CRITICAL alert on device 3 (201)
 POST {{host}}/api/v1/alerts
 Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": 3,
+  "deviceId": 3,
   "metric": "POWER_CONSUMPTION",
   "severity": "CRITICAL",
-  "lastValue": 12.8
+  "lastValue": 12.8,
+  "thresholdValue": 10.0
 }
 
 ### Invalid request (400)
@@ -40,7 +43,7 @@ Content-Type: application/json
 Accept-Language: es
 
 {
-  "equipmentId": 0,
+  "deviceId": 0,
   "metric": "TEMPERATURE"
 }
 

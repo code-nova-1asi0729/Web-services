@@ -9,40 +9,44 @@ import lombok.Getter;
 
 import java.time.Instant;
 /**
- * Early warning raised when a reading of a critical equipment is out of range.
+ * Early warning raised when a reading of a device is out of range.
  */
 @Getter
 public class Alert extends AbstractDomainAggregateRoot<Alert> {
 
     private Long id;
-    private Long equipmentId;
+    private Long deviceId;
     private MetricType metric;
     private AlertSeverity severity;
     private AlertStatus status;
     private Double lastValue;
+    private Double thresholdValue;
     private Instant detectedAt;
     private Instant resolvedAt;
 
     private Alert() {}
 
     public Alert(RaiseAlertCommand command) {
-        this.equipmentId = command.equipmentId();
+        this.deviceId = command.deviceId();
         this.metric = command.metric();
         this.severity = command.severity();
         this.lastValue = command.lastValue();
+        this.thresholdValue = command.thresholdValue();
         this.status = AlertStatus.ACTIVE;
         this.detectedAt = Instant.now();
     }
 
-    public static Alert reconstitute(Long id, Long equipmentId, MetricType metric, AlertSeverity severity,
-                                     AlertStatus status, Double lastValue, Instant detectedAt, Instant resolvedAt) {
+    public static Alert reconstitute(Long id, Long deviceId, MetricType metric, AlertSeverity severity,
+                                     AlertStatus status, Double lastValue, Double thresholdValue,
+                                     Instant detectedAt, Instant resolvedAt) {
         var alert = new Alert();
         alert.id = id;
-        alert.equipmentId = equipmentId;
+        alert.deviceId = deviceId;
         alert.metric = metric;
         alert.severity = severity;
         alert.status = status;
         alert.lastValue = lastValue;
+        alert.thresholdValue = thresholdValue;
         alert.detectedAt = detectedAt;
         alert.resolvedAt = resolvedAt;
         return alert;
@@ -59,5 +63,12 @@ public class Alert extends AbstractDomainAggregateRoot<Alert> {
         this.status = AlertStatus.RESOLVED;
         this.resolvedAt = Instant.now();
         return true;
+    }
+
+    /**
+     * How many times the last value is above its threshold. Used to decide which alert to attend first.
+     */
+    public double exceedRatio() {
+        return lastValue / thresholdValue;
     }
 }

@@ -14,11 +14,12 @@ public final class AlertPersistenceAssembler {
     public static Alert toDomainFromPersistence(AlertPersistenceEntity entity) {
         return Alert.reconstitute(
                 entity.getId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getMetric(),
                 entity.getSeverity(),
                 entity.getStatus(),
                 entity.getLastValue(),
+                entity.getThresholdValue(),
                 entity.getDetectedAt(),
                 entity.getResolvedAt());
     }
@@ -27,11 +28,12 @@ public final class AlertPersistenceAssembler {
         var entity = new AlertPersistenceEntity();
         // A new alert has no id yet, so JPA generates it
         if (alert.getId() != null) entity.setId(alert.getId());
-        entity.setEquipmentId(alert.getEquipmentId());
+        entity.setDeviceId(alert.getDeviceId());
         entity.setMetric(alert.getMetric());
         entity.setSeverity(alert.getSeverity());
         entity.setStatus(alert.getStatus());
         entity.setLastValue(alert.getLastValue());
+        entity.setThresholdValue(alert.getThresholdValue());
         entity.setDetectedAt(alert.getDetectedAt());
         entity.setResolvedAt(alert.getResolvedAt());
         return entity;

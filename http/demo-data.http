@@ -118,7 +118,8 @@ Accept-Language: en
   "deviceId": {{elevatorId}},
   "metric": "POWER_CONSUMPTION",
   "severity": "CRITICAL",
-  "lastValue": 12.8
+  "lastValue": 12.8,
+  "thresholdValue": 10.0
 }
 
 ### Raise HIGH alert on the air conditioning
@@ -130,7 +131,8 @@ Accept-Language: en
   "deviceId": {{hvacId}},
   "metric": "TEMPERATURE",
   "severity": "HIGH",
-  "lastValue": 78.5
+  "lastValue": 78.5,
+  "thresholdValue": 60.0
 }
 
 ### Raise MEDIUM alert on the water pump
@@ -142,7 +144,8 @@ Accept-Language: en
   "deviceId": {{pumpId}},
   "metric": "VIBRATION",
   "severity": "MEDIUM",
-  "lastValue": 7.2
+  "lastValue": 7.2,
+  "thresholdValue": 4.5
 }
 
 > {% client.global.set("pumpAlertId", response.body.id); %}
@@ -156,7 +159,8 @@ Accept-Language: en
   "deviceId": {{panelId}},
   "metric": "HUMIDITY",
   "severity": "LOW",
-  "lastValue": 68.0
+  "lastValue": 68.0,
+  "thresholdValue": 60.0
 }
 
 > {% client.global.set("panelAlertId", response.body.id); %}

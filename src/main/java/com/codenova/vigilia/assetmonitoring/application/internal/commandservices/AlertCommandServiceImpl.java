@@ -27,7 +27,7 @@ public class AlertCommandServiceImpl implements AlertCommandService {
     @Transactional
     public Result<Alert, AlertCommandFailure> handle(RaiseAlertCommand command) {
         var alert = alertRepository.save(new Alert(command));
-        log.info("Alert raised: id={}, equipmentId={}, severity={}", alert.getId(), alert.getEquipmentId(), alert.getSeverity());
+        log.info("Alert raised: id={}, deviceId={}, severity={}", alert.getId(), alert.getDeviceId(), alert.getSeverity());
         return Result.success(alert);
     }
 

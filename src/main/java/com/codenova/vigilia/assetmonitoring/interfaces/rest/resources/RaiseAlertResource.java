@@ -10,10 +10,10 @@ import jakarta.validation.constraints.Positive;
  */
 @Schema(description = "Request to raise an alert")
 public record RaiseAlertResource(
-        @Schema(description = "Critical equipment with the out-of-range reading", example = "2")
-        @NotNull(message = "{alert.error.equipmentId.invalid}")
-        @Positive(message = "{alert.error.equipmentId.invalid}")
-        Long equipmentId,
+        @Schema(description = "Device with the out-of-range reading", example = "2")
+        @NotNull(message = "{alert.error.deviceId.invalid}")
+        @Positive(message = "{alert.error.deviceId.invalid}")
+        Long deviceId,
 
         @Schema(description = "Measured magnitude", example = "TEMPERATURE")
         @NotNull(message = "{alert.error.metric.notNull}")
@@ -25,4 +25,9 @@ public record RaiseAlertResource(
 
         @Schema(description = "Last value read", example = "78.5")
         @NotNull(message = "{alert.error.lastValue.notNull}")
-        Double lastValue) {}
+        Double lastValue,
+
+        @Schema(description = "Normal limit for this metric", example = "4.5")
+        @NotNull(message = "{alert.error.thresholdValue.invalid}")
+        @Positive(message = "{alert.error.thresholdValue.invalid}")
+        Double thresholdValue) {}
