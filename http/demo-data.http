@@ -33,7 +33,7 @@ Accept-Language: en
 > {% client.global.set("marAzulId", response.body.id); %}
 
 ### Register water pump in Los Pinos
-POST {{host}}/api/v1/equipment
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -49,7 +49,7 @@ Accept-Language: en
 > {% client.global.set("pumpId", response.body.id); %}
 
 ### Register electrical panel in Los Pinos
-POST {{host}}/api/v1/equipment
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -65,7 +65,7 @@ Accept-Language: en
 > {% client.global.set("panelId", response.body.id); %}
 
 ### Register elevator in Los Pinos
-POST {{host}}/api/v1/equipment
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -81,7 +81,7 @@ Accept-Language: en
 > {% client.global.set("elevatorId", response.body.id); %}
 
 ### Register air conditioning in Mar Azul
-POST {{host}}/api/v1/equipment
+POST {{host}}/api/v1/devices
 Content-Type: application/json
 Accept-Language: en
 
@@ -96,8 +96,8 @@ Accept-Language: en
 
 > {% client.global.set("hvacId", response.body.id); %}
 
-### Mark the water pump as requiring follow-up
-PUT {{host}}/api/v1/equipment/{{pumpId}}
+### Mark the water pump as devices follow-up
+PUT {{host}}/api/v1/devices/{{pumpId}}
 Content-Type: application/json
 Accept-Language: en
 
@@ -115,10 +115,11 @@ Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": {{elevatorId}},
+  "deviceId": {{elevatorId}},
   "metric": "POWER_CONSUMPTION",
   "severity": "CRITICAL",
-  "lastValue": 12.8
+  "lastValue": 12.8,
+  "thresholdValue": 10.0
 }
 
 ### Raise HIGH alert on the air conditioning
@@ -127,10 +128,11 @@ Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": {{hvacId}},
+  "deviceId": {{hvacId}},
   "metric": "TEMPERATURE",
   "severity": "HIGH",
-  "lastValue": 78.5
+  "lastValue": 78.5,
+  "thresholdValue": 60.0
 }
 
 ### Raise MEDIUM alert on the water pump
@@ -139,10 +141,11 @@ Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": {{pumpId}},
+  "deviceId": {{pumpId}},
   "metric": "VIBRATION",
   "severity": "MEDIUM",
-  "lastValue": 7.2
+  "lastValue": 7.2,
+  "thresholdValue": 4.5
 }
 
 > {% client.global.set("pumpAlertId", response.body.id); %}
@@ -153,10 +156,11 @@ Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": {{panelId}},
+  "deviceId": {{panelId}},
   "metric": "HUMIDITY",
   "severity": "LOW",
-  "lastValue": 68.0
+  "lastValue": 68.0,
+  "thresholdValue": 60.0
 }
 
 > {% client.global.set("panelAlertId", response.body.id); %}
@@ -177,7 +181,7 @@ Accept-Language: en
 {
   "buildingId": {{losPinosId}},
   "residentId": 3,
-  "equipmentId": {{elevatorId}},
+  "deviceId": {{elevatorId}},
   "category": "ELEVATOR",
   "description": "El ascensor de la torre A hace un ruido fuerte al subir."
 }
@@ -204,7 +208,7 @@ Accept-Language: en
 {
   "buildingId": {{marAzulId}},
   "residentId": 7,
-  "equipmentId": {{hvacId}},
+  "deviceId": {{hvacId}},
   "category": "HVAC",
   "description": "El aire acondicionado del lobby no enfría desde ayer."
 }

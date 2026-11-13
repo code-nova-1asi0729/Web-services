@@ -1,0 +1,66 @@
+### Register device
+POST {{host}}/api/v1/devices
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": 1,
+  "code": "LP-WP-01",
+  "name": "Bomba hidroneumática 1",
+  "type": "WATER_PUMP",
+  "location": "Sótano 1",
+  "installationDate": "2021-03-15"
+}
+
+### Register device
+POST {{host}}/api/v1/devices
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": 1,
+  "code": "LP-EP-01",
+  "name": "Tablero eléctrico general",
+  "type": "ELECTRICAL_PANEL",
+  "location": "Cuarto de máquinas",
+  "installationDate": "2020-08-10"
+}
+
+### Register device
+POST {{host}}/api/v1/devices
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "buildingId": 1,
+  "code": "LP-EL-01",
+  "name": "Ascensor torre A",
+  "type": "ELEVATOR",
+  "location": "Torre A",
+  "installationDate": "2019-05-20"
+}
+
+### Get all devices
+GET {{host}}/api/v1/devices
+Accept-Language: en
+
+### Get devices by building
+GET {{host}}/api/v1/devices?buildingId=1
+Accept-Language: es
+
+### Get device by id
+GET {{host}}/api/v1/devices/1
+Accept-Language: en
+
+### Modify device
+PUT {{host}}/api/v1/devices/1
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "name": "Bomba hidroneumática 1",
+  "type": "WATER_PUMP",
+  "location": "Sótano 1",
+  "installationDate": "2021-03-15",
+  "status": "REQUIRES_FOLLOW_UP"
+}

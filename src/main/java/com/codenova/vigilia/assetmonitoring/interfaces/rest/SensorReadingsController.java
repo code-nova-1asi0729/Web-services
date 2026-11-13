@@ -4,7 +4,7 @@ import com.codenova.vigilia.assetmonitoring.application.commandservices.SensorRe
 import com.codenova.vigilia.assetmonitoring.application.queryservices.SensorReadingQueryService;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllSensorReadingsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorReadingByIdQuery;
-import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorReadingsByEquipmentIdQuery;
+import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorReadingsByDeviceIdQuery;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.RecordReadingResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.SensorReadingResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.transform.RecordReadingCommandFromResourceAssembler;
@@ -54,7 +54,7 @@ public class SensorReadingsController {
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
             @ApiResponse(responseCode = "404", description = "Sensor not found",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "409", description = "Sensor is not assigned to an equipment",
+            @ApiResponse(responseCode = "409", description = "Sensor is not assigned to a device",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping
@@ -64,16 +64,16 @@ public class SensorReadingsController {
         return ResponseEntityFromSensorReadingCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.CREATED, messageSource);
     }
 
-    @Operation(summary = "Get sensor readings, the most recent first, optionally filtered by equipment")
+    @Operation(summary = "Get sensor readings, the most recent first, optionally filtered by device")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Readings found",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = SensorReadingResource.class))))
     })
     @GetMapping
-    public ResponseEntity<?> getAllSensorReadings(@RequestParam(required = false) Long equipmentId) {
-        var readings = equipmentId == null
+    public ResponseEntity<?> getAllSensorReadings(@RequestParam(required = false) Long deviceId) {
+        var readings = deviceId == null
                 ? sensorReadingQueryService.handle(new GetAllSensorReadingsQuery())
-                : sensorReadingQueryService.handle(new GetSensorReadingsByEquipmentIdQuery(equipmentId));
+                : sensorReadingQueryService.handle(new GetSensorReadingsByDeviceIdQuery(deviceId));
         return ResponseEntityFromSensorReadingQueryResultAssembler.toResponseEntityFromList(readings);
     }
 

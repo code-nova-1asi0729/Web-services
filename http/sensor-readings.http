@@ -1,8 +1,8 @@
-### Get the first equipment
-GET {{host}}/api/v1/equipment
+### Get the first device
+GET {{host}}/api/v1/devices
 Accept: application/json
 
-> {% client.global.set("equipmentId", response.body[0].id); %}
+> {% client.global.set("deviceId", response.body[0].id); %}
 
 ### Register a sensor for the readings
 POST {{host}}/api/v1/sensors
@@ -35,7 +35,7 @@ Content-Type: application/json
 Accept-Language: en
 
 {
-  "equipmentId": {{equipmentId}}
+  "deviceId": {{deviceId}}
 }
 
 ### Record a valid reading
@@ -96,8 +96,8 @@ Accept-Language: en
 GET {{host}}/api/v1/sensors/{{readingSensorId}}
 Accept: application/json
 
-### Readings of the equipment, the most recent first
-GET {{host}}/api/v1/sensor-readings?equipmentId={{equipmentId}}
+### Readings of the device, the most recent first
+GET {{host}}/api/v1/sensor-readings?deviceId={{deviceId}}
 Accept: application/json
 
 ### All readings

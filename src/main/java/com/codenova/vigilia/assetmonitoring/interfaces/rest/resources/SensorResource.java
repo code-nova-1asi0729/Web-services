@@ -9,8 +9,8 @@ public record SensorResource(
         @Schema(description = "Sensor identifier", example = "1")
         Long id,
 
-        @Schema(description = "Equipment the sensor measures, or null if it is not assigned", example = "1")
-        Long equipmentId,
+        @Schema(description = "Device the sensor measures, or null if it is not assigned", example = "1")
+        Long deviceId,
 
         @Schema(description = "Serial number", example = "VS-1001")
         String serialNumber,

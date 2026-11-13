@@ -28,8 +28,8 @@ public class ResponseEntityFromSensorCommandResultAssembler {
         return switch (failure) {
             case SensorCommandFailure.DuplicateSerialNumber _ -> HttpStatus.CONFLICT;
             case SensorCommandFailure.NotFound _ -> HttpStatus.NOT_FOUND;
-            case SensorCommandFailure.EquipmentNotFound _ -> HttpStatus.NOT_FOUND;
-            case SensorCommandFailure.EquipmentDecommissioned _ -> HttpStatus.CONFLICT;
+            case SensorCommandFailure.DeviceNotFound _ -> HttpStatus.NOT_FOUND;
+            case SensorCommandFailure.DeviceDecommissioned _ -> HttpStatus.CONFLICT;
             case SensorCommandFailure.AlreadyAssigned _ -> HttpStatus.CONFLICT;
             case SensorCommandFailure.NotAssigned _ -> HttpStatus.CONFLICT;
         };

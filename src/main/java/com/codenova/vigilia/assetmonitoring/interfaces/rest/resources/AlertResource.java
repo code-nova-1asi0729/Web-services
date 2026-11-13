@@ -10,9 +10,9 @@ import java.time.Instant;
 public record AlertResource(
         @Schema(description = "Alert identifier", example = "1")
         Long id,
-        @Schema(description = "Critical equipment identifier", example = "2")
-        Long equipmentId,
-        @Schema(description = "Measured magnitude", example = "TEMPERATURE")
+        @Schema(description = "Device identifier", example = "2")
+        Long deviceId,
+        @Schema(description = "Measured magnitude: VIBRATION, TEMPERATURE, HUMIDITY, POWER_CONSUMPTION, CURRENT or PRESSURE", example = "TEMPERATURE")
         String metric,
         @Schema(description = "How serious it is", example = "HIGH")
         String severity,
@@ -20,5 +20,7 @@ public record AlertResource(
         String status,
         @Schema(description = "Last value read", example = "78.5")
         Double lastValue,
+        @Schema(description = "Normal limit for this metric", example = "4.5")
+        Double thresholdValue,
         @Schema(description = "When it was detected", example = "2026-10-06T12:00:00Z")
         Instant detectedAt) {}

@@ -6,5 +6,7 @@ public enum MetricType {
     VIBRATION,
     TEMPERATURE,
     HUMIDITY,
-    POWER_CONSUMPTION
+    POWER_CONSUMPTION,
+    CURRENT,
+    PRESSURE
 }

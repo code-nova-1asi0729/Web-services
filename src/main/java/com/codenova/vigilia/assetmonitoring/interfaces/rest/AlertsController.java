@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 /**
- * REST endpoints for alerts raised on critical equipment.
+ * REST endpoints for alerts raised on devices.
  */
 @RestController
 @RequestMapping(value = "/api/v1/alerts", produces = APPLICATION_JSON_VALUE)

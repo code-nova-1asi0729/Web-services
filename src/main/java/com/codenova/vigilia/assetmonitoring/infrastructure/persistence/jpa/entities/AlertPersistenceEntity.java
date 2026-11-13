@@ -22,7 +22,7 @@ import java.time.Instant;
 public class AlertPersistenceEntity extends AuditableAbstractPersistenceEntity {
 
     @Column(nullable = false)
-    private Long equipmentId;
+    private Long deviceId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -39,6 +39,9 @@ public class AlertPersistenceEntity extends AuditableAbstractPersistenceEntity {
     // last_value is a reserved word in MySQL 8, so the column uses another name
     @Column(name = "last_reading_value", nullable = false)
     private Double lastValue;
+
+    @Column(nullable = false)
+    private Double thresholdValue;
 
     @Column(nullable = false)
     private Instant detectedAt;

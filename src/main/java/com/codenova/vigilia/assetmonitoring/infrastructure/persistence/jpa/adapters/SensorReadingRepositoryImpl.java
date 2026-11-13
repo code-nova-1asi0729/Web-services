@@ -29,8 +29,8 @@ public class SensorReadingRepositoryImpl implements SensorReadingRepository {
     }
 
     @Override
-    public List<SensorReading> findAllByEquipmentId(Long equipmentId) {
-        return sensorReadingPersistenceRepository.findAllByEquipmentIdOrderByRecordedAtDesc(equipmentId).stream()
+    public List<SensorReading> findAllByDeviceId(Long deviceId) {
+        return sensorReadingPersistenceRepository.findAllByDeviceIdOrderByRecordedAtDesc(deviceId).stream()
                 .map(SensorReadingPersistenceAssembler::toDomainFromPersistence)
                 .toList();
     }

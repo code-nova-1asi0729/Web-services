@@ -4,7 +4,7 @@ import com.codenova.vigilia.assetmonitoring.application.queryservices.SensorRead
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.SensorReading;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllSensorReadingsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorReadingByIdQuery;
-import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorReadingsByEquipmentIdQuery;
+import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorReadingsByDeviceIdQuery;
 import com.codenova.vigilia.assetmonitoring.domain.repositories.SensorReadingRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,8 @@ public class SensorReadingQueryServiceImpl implements SensorReadingQueryService 
     }
 
     @Override
-    public List<SensorReading> handle(GetSensorReadingsByEquipmentIdQuery query) {
-        return sensorReadingRepository.findAllByEquipmentId(query.equipmentId());
+    public List<SensorReading> handle(GetSensorReadingsByDeviceIdQuery query) {
+        return sensorReadingRepository.findAllByDeviceId(query.deviceId());
     }
 
     @Override

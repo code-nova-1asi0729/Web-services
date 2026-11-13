@@ -12,7 +12,7 @@ public interface SensorReadingRepository {
 
     List<SensorReading> findAll();
 
-    List<SensorReading> findAllByEquipmentId(Long equipmentId);
+    List<SensorReading> findAllByDeviceId(Long deviceId);
 
     Optional<SensorReading> findById(Long id);
 

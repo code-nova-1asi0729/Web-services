@@ -14,5 +14,5 @@ public interface SensorReadingPersistenceRepository extends JpaRepository<Sensor
 
     List<SensorReadingPersistenceEntity> findAllByOrderByRecordedAtDesc();
 
-    List<SensorReadingPersistenceEntity> findAllByEquipmentIdOrderByRecordedAtDesc(Long equipmentId);
+    List<SensorReadingPersistenceEntity> findAllByDeviceIdOrderByRecordedAtDesc(Long deviceId);
 }
