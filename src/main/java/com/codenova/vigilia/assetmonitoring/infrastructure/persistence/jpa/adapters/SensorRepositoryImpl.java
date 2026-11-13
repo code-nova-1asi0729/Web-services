@@ -30,8 +30,8 @@ public class SensorRepositoryImpl implements SensorRepository {
     }
 
     @Override
-    public List<Sensor> findAllByEquipmentId(Long equipmentId) {
-        return sensorPersistenceRepository.findAllByEquipmentId(equipmentId).stream()
+    public List<Sensor> findAllByDeviceId(Long deviceId) {
+        return sensorPersistenceRepository.findAllByDeviceId(deviceId).stream()
                 .map(SensorPersistenceAssembler::toDomainFromPersistence)
                 .toList();
     }

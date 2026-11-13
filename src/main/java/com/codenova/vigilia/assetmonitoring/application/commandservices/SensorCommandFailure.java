@@ -1,8 +1,8 @@
 package com.codenova.vigilia.assetmonitoring.application.commandservices;
 
 public sealed interface SensorCommandFailure permits SensorCommandFailure.DuplicateSerialNumber,
-        SensorCommandFailure.NotFound, SensorCommandFailure.EquipmentNotFound,
-        SensorCommandFailure.EquipmentDecommissioned, SensorCommandFailure.AlreadyAssigned,
+        SensorCommandFailure.NotFound, SensorCommandFailure.DeviceNotFound,
+        SensorCommandFailure.DeviceDecommissioned, SensorCommandFailure.AlreadyAssigned,
         SensorCommandFailure.NotAssigned {
 
     String messageKey();
@@ -21,17 +21,17 @@ public sealed interface SensorCommandFailure permits SensorCommandFailure.Duplic
         }
     }
 
-    record EquipmentNotFound() implements SensorCommandFailure {
+    record DeviceNotFound() implements SensorCommandFailure {
         @Override
         public String messageKey() {
-            return "sensor.error.equipmentNotFound";
+            return "sensor.error.deviceNotFound";
         }
     }
 
-    record EquipmentDecommissioned() implements SensorCommandFailure {
+    record DeviceDecommissioned() implements SensorCommandFailure {
         @Override
         public String messageKey() {
-            return "sensor.error.equipmentDecommissioned";
+            return "sensor.error.deviceDecommissioned";
         }
     }
 

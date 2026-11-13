@@ -21,8 +21,8 @@ import java.time.Instant;
 @NoArgsConstructor
 public class SensorPersistenceEntity extends AuditableAbstractPersistenceEntity {
 
-    // Null while the sensor is not assigned to an equipment
-    private Long equipmentId;
+    // Null while the sensor is not assigned to a device
+    private Long deviceId;
 
     @Column(nullable = false, unique = true)
     @Convert(converter = SerialNumberPersistenceConverter.class)

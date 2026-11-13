@@ -28,7 +28,7 @@ class SensorTest {
         assertTrue(sensor.assignTo(1L));
         assertEquals(SensorStatus.ASSIGNED, sensor.getStatus());
         assertFalse(sensor.assignTo(2L));
-        assertEquals(1L, sensor.getEquipmentId());
+        assertEquals(1L, sensor.getDeviceId());
     }
 
     @Test
@@ -37,7 +37,7 @@ class SensorTest {
         assertFalse(sensor.release());
         sensor.assignTo(1L);
         assertTrue(sensor.release());
-        assertNull(sensor.getEquipmentId());
+        assertNull(sensor.getDeviceId());
         assertEquals(SensorStatus.UNASSIGNED, sensor.getStatus());
     }
 
