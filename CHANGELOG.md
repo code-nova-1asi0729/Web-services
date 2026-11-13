@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-13
+
+### Added
+
+- Alerts: `thresholdValue`, the normal limit of the metric, required when an alert is raised.
+- Sensor readings: `CURRENT` and `PRESSURE` metrics.
+- Tests for the device aggregate and for the alert threshold.
+
+### Changed
+
+- **Breaking:** critical equipment is now called device, as part of the ubiquitous language: `/api/v1/devices` endpoint, `devices` table and `deviceId` field in sensors, sensor readings, alerts and incidents.
+- The README uses the new repository names.
+
+### Removed
+
+- `/api/v1/equipment` endpoint.
+
 ## [0.2.0] - 2026-11-09
 
 ### Added

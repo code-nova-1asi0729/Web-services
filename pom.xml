@@ -10,10 +10,10 @@
     </parent>
     <groupId>com.codenova</groupId>
     <artifactId>vigilia</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <name>vigilia-platform</name>
-    <description>Vigilia Platform API: preventive maintenance of critical equipment in residential buildings</description>
-    <url>https://github.com/code-nova-1asi0729/backend</url>
+    <description>Vigilia Platform API: preventive maintenance of the devices of residential buildings</description>
+    <url>https://github.com/code-nova-1asi0729/Web-services</url>
     <licenses>
         <license>
             <name>MIT</name>
@@ -43,7 +43,7 @@
     </developers>
     <scm>
         <connection>scm:git:https://github.com/code-nova-1asi0729/backend.git</connection>
-        <url>https://github.com/code-nova-1asi0729/backend</url>
+        <url>https://github.com/code-nova-1asi0729/Web-services</url>
     </scm>
     <properties>
         <java.version>27</java.version>
