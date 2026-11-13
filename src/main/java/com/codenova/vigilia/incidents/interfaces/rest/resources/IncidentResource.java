@@ -14,8 +14,8 @@ public record IncidentResource(
         Long buildingId,
         @Schema(description = "Resident identifier", example = "3")
         Long residentId,
-        @Schema(description = "Critical equipment identifier, may be null", example = "3")
-        Long equipmentId,
+        @Schema(description = "Device identifier, may be null", example = "3")
+        Long deviceId,
         @Schema(description = "Type of problem", example = "ELEVATOR")
         String category,
         @Schema(description = "Description", example = "El ascensor de la torre A hace un ruido fuerte al subir.")

@@ -10,7 +10,7 @@ public class ReportIncidentCommandFromResourceAssembler {
         return new ReportIncidentCommand(
                 resource.buildingId(),
                 resource.residentId(),
-                resource.equipmentId(),
+                resource.deviceId(),
                 resource.category(),
                 resource.description());
     }
