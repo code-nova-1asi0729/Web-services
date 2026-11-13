@@ -12,10 +12,10 @@ public record SensorReadingResource(
         @Schema(description = "Sensor that sent the reading", example = "1")
         Long sensorId,
 
-        @Schema(description = "Equipment measured", example = "1")
-        Long equipmentId,
+        @Schema(description = "Device measured", example = "1")
+        Long deviceId,
 
-        @Schema(description = "Measured magnitude", example = "VIBRATION")
+        @Schema(description = "Measured magnitude: VIBRATION, TEMPERATURE, HUMIDITY, POWER_CONSUMPTION, CURRENT or PRESSURE", example = "CURRENT")
         String metric,
 
         @Schema(description = "Measured value", example = "2.3")

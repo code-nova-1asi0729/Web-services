@@ -16,7 +16,7 @@ public record RecordReadingResource(
         @Positive(message = "{reading.error.sensorId.invalid}")
         Long sensorId,
 
-        @Schema(description = "Measured magnitude", example = "VIBRATION")
+        @Schema(description = "Measured magnitude: VIBRATION, TEMPERATURE, HUMIDITY, POWER_CONSUMPTION, CURRENT or PRESSURE", example = "CURRENT")
         @NotNull(message = "{reading.error.metric.notNull}")
         MetricType metric,
 

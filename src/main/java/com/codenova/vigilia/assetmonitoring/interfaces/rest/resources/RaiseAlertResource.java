@@ -15,7 +15,7 @@ public record RaiseAlertResource(
         @Positive(message = "{alert.error.deviceId.invalid}")
         Long deviceId,
 
-        @Schema(description = "Measured magnitude", example = "TEMPERATURE")
+        @Schema(description = "Measured magnitude: VIBRATION, TEMPERATURE, HUMIDITY, POWER_CONSUMPTION, CURRENT or PRESSURE", example = "TEMPERATURE")
         @NotNull(message = "{alert.error.metric.notNull}")
         MetricType metric,
 

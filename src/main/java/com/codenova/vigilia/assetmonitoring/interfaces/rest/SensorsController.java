@@ -5,7 +5,7 @@ import com.codenova.vigilia.assetmonitoring.application.queryservices.SensorQuer
 import com.codenova.vigilia.assetmonitoring.domain.model.commands.ReleaseSensorCommand;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllSensorsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorByIdQuery;
-import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorsByEquipmentIdQuery;
+import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorsByDeviceIdQuery;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.AssignSensorResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.RegisterSensorResource;
 import com.codenova.vigilia.assetmonitoring.interfaces.rest.resources.SensorResource;
@@ -64,16 +64,16 @@ public class SensorsController {
         return ResponseEntityFromSensorCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.CREATED, messageSource);
     }
 
-    @Operation(summary = "Get all sensors, optionally filtered by equipment")
+    @Operation(summary = "Get all sensors, optionally filtered by device")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Sensors found",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = SensorResource.class))))
     })
     @GetMapping
-    public ResponseEntity<?> getAllSensors(@RequestParam(required = false) Long equipmentId) {
-        var sensors = equipmentId == null
+    public ResponseEntity<?> getAllSensors(@RequestParam(required = false) Long deviceId) {
+        var sensors = deviceId == null
                 ? sensorQueryService.handle(new GetAllSensorsQuery())
-                : sensorQueryService.handle(new GetSensorsByEquipmentIdQuery(equipmentId));
+                : sensorQueryService.handle(new GetSensorsByDeviceIdQuery(deviceId));
         return ResponseEntityFromSensorQueryResultAssembler.toResponseEntityFromList(sensors);
     }
 
@@ -94,15 +94,15 @@ public class SensorsController {
         return ResponseEntityFromSensorQueryResultAssembler.toResponseEntityFromEntity(sensor.get());
     }
 
-    @Operation(summary = "Assign a sensor to a critical equipment")
+    @Operation(summary = "Assign a sensor to a device")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Sensor assigned",
                     content = @Content(schema = @Schema(implementation = SensorResource.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "404", description = "Sensor or equipment not found",
+            @ApiResponse(responseCode = "404", description = "Sensor or device not found",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "409", description = "Sensor already assigned or equipment decommissioned",
+            @ApiResponse(responseCode = "409", description = "Sensor already assigned or device decommissioned",
                     content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
     })
     @PostMapping("/{sensorId}/assignments")
@@ -112,7 +112,7 @@ public class SensorsController {
         return ResponseEntityFromSensorCommandResultAssembler.toResponseEntityFromResult(result, HttpStatus.OK, messageSource);
     }
 
-    @Operation(summary = "Release a sensor from its equipment")
+    @Operation(summary = "Release a sensor from its device")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Sensor released",
                     content = @Content(schema = @Schema(implementation = SensorResource.class))),

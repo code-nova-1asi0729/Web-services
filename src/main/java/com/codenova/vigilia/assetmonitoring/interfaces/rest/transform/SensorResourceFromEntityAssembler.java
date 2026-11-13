@@ -8,7 +8,7 @@ public class SensorResourceFromEntityAssembler {
     public static SensorResource toResourceFromEntity(Sensor entity) {
         return new SensorResource(
                 entity.getId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getSerialNumber().value(),
                 entity.getModel(),
                 entity.getStatus().name(),

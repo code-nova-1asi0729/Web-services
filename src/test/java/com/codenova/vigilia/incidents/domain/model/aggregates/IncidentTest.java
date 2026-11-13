@@ -48,4 +48,17 @@ class IncidentTest {
         assertTrue(incident.rate(new RatingScore(5), "Muy rápido."));
         assertFalse(incident.rate(new RatingScore(1), null));
     }
+
+    @Test
+    void keepsTheDeviceItWasReportedFor() {
+        var incident = new Incident(new ReportIncidentCommand(1L, 3L, 4L, IncidentCategory.ELEVATOR,
+                "El ascensor hace un ruido fuerte."));
+        assertEquals(4L, incident.getDeviceId());
+    }
+
+    @Test
+    void rejectsAnInvalidDeviceId() {
+        assertThrows(IllegalArgumentException.class, () -> new ReportIncidentCommand(1L, 3L, 0L,
+                IncidentCategory.ELEVATOR, "El ascensor hace un ruido fuerte."));
+    }
 }

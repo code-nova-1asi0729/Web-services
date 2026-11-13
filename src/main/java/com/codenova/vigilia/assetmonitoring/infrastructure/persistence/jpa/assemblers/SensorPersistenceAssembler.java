@@ -14,7 +14,7 @@ public final class SensorPersistenceAssembler {
     public static Sensor toDomainFromPersistence(SensorPersistenceEntity entity) {
         return Sensor.reconstitute(
                 entity.getId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getSerialNumber(),
                 entity.getModel(),
                 entity.getStatus(),
@@ -25,7 +25,7 @@ public final class SensorPersistenceAssembler {
         var entity = new SensorPersistenceEntity();
         // A new sensor has no id yet, so JPA generates it
         if (sensor.getId() != null) entity.setId(sensor.getId());
-        entity.setEquipmentId(sensor.getEquipmentId());
+        entity.setDeviceId(sensor.getDeviceId());
         entity.setSerialNumber(sensor.getSerialNumber());
         entity.setModel(sensor.getModel());
         entity.setStatus(sensor.getStatus());

@@ -28,7 +28,7 @@ public class IncidentPersistenceEntity extends AuditableAbstractPersistenceEntit
     @Column(nullable = false)
     private Long residentId;
 
-    private Long equipmentId;
+    private Long deviceId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

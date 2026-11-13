@@ -13,7 +13,7 @@ public interface SensorRepository {
 
     List<Sensor> findAll();
 
-    List<Sensor> findAllByEquipmentId(Long equipmentId);
+    List<Sensor> findAllByDeviceId(Long deviceId);
 
     Optional<Sensor> findById(Long id);
 

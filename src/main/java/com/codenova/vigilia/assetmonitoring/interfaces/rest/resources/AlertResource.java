@@ -12,7 +12,7 @@ public record AlertResource(
         Long id,
         @Schema(description = "Device identifier", example = "2")
         Long deviceId,
-        @Schema(description = "Measured magnitude", example = "TEMPERATURE")
+        @Schema(description = "Measured magnitude: VIBRATION, TEMPERATURE, HUMIDITY, POWER_CONSUMPTION, CURRENT or PRESSURE", example = "TEMPERATURE")
         String metric,
         @Schema(description = "How serious it is", example = "HIGH")
         String severity,

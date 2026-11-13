@@ -17,7 +17,7 @@ public class Incident extends AbstractDomainAggregateRoot<Incident> {
     private Long id;
     private Long buildingId;
     private Long residentId;
-    private Long equipmentId;
+    private Long deviceId;
     private IncidentCategory category;
     private String description;
     private IncidentStatus status;
@@ -33,14 +33,14 @@ public class Incident extends AbstractDomainAggregateRoot<Incident> {
     public Incident(ReportIncidentCommand command) {
         this.buildingId = command.buildingId();
         this.residentId = command.residentId();
-        this.equipmentId = command.equipmentId();
+        this.deviceId = command.deviceId();
         this.category = command.category();
         this.description = command.description();
         this.status = IncidentStatus.REPORTED;
         this.reportedAt = Instant.now();
     }
 
-    public static Incident reconstitute(Long id, Long buildingId, Long residentId, Long equipmentId,
+    public static Incident reconstitute(Long id, Long buildingId, Long residentId, Long deviceId,
                                         IncidentCategory category, String description, IncidentStatus status,
                                         RatingScore ratingScore, String ratingComment, Instant reportedAt,
                                         Instant startedAt, Instant resolvedAt, Instant ratedAt) {
@@ -48,7 +48,7 @@ public class Incident extends AbstractDomainAggregateRoot<Incident> {
         incident.id = id;
         incident.buildingId = buildingId;
         incident.residentId = residentId;
-        incident.equipmentId = equipmentId;
+        incident.deviceId = deviceId;
         incident.category = category;
         incident.description = description;
         incident.status = status;

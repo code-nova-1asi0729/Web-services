@@ -31,7 +31,7 @@ public class SensorReadingCommandServiceImpl implements SensorReadingCommandServ
         if (sensor.isEmpty()) return Result.failure(new SensorReadingCommandFailure.SensorNotFound());
         if (!sensor.get().isAssigned()) return Result.failure(new SensorReadingCommandFailure.SensorNotAssigned());
 
-        var reading = sensorReadingRepository.save(new SensorReading(command, sensor.get().getEquipmentId()));
+        var reading = sensorReadingRepository.save(new SensorReading(command, sensor.get().getDeviceId()));
         sensor.get().registerSignal(reading.getRecordedAt());
         sensorRepository.save(sensor.get());
 

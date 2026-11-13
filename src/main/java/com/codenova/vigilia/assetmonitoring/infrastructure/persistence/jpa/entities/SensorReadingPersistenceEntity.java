@@ -24,7 +24,7 @@ public class SensorReadingPersistenceEntity extends AuditableAbstractPersistence
     private Long sensorId;
 
     @Column(nullable = false)
-    private Long equipmentId;
+    private Long deviceId;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

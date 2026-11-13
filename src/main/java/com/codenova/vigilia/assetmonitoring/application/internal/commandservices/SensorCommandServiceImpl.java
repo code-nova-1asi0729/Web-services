@@ -48,11 +48,11 @@ public class SensorCommandServiceImpl implements SensorCommandService {
     public Result<Sensor, SensorCommandFailure> handle(AssignSensorCommand command) {
         var sensor = sensorRepository.findById(command.sensorId());
         if (sensor.isEmpty()) return Result.failure(new SensorCommandFailure.NotFound());
-        var equipment = deviceRepository.findById(command.equipmentId());
-        if (equipment.isEmpty()) return Result.failure(new SensorCommandFailure.EquipmentNotFound());
-        if (equipment.get().isDecommissioned()) return Result.failure(new SensorCommandFailure.EquipmentDecommissioned());
-        if (!sensor.get().assignTo(command.equipmentId())) return Result.failure(new SensorCommandFailure.AlreadyAssigned());
-        log.info("Sensor assigned: id={}, equipmentId={}", command.sensorId(), command.equipmentId());
+        var device = deviceRepository.findById(command.deviceId());
+        if (device.isEmpty()) return Result.failure(new SensorCommandFailure.DeviceNotFound());
+        if (device.get().isDecommissioned()) return Result.failure(new SensorCommandFailure.DeviceDecommissioned());
+        if (!sensor.get().assignTo(command.deviceId())) return Result.failure(new SensorCommandFailure.AlreadyAssigned());
+        log.info("Sensor assigned: id={}, deviceId={}", command.sensorId(), command.deviceId());
         return Result.success(sensorRepository.save(sensor.get()));
     }
 

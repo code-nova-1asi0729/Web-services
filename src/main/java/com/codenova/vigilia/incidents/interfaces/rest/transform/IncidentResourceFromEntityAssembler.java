@@ -11,7 +11,7 @@ public class IncidentResourceFromEntityAssembler {
                 entity.getId(),
                 entity.getBuildingId(),
                 entity.getResidentId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getCategory().name(),
                 entity.getDescription(),
                 entity.getStatus().name(),

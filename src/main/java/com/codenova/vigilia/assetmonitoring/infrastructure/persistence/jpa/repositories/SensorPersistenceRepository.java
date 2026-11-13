@@ -15,5 +15,5 @@ public interface SensorPersistenceRepository extends JpaRepository<SensorPersist
 
     boolean existsBySerialNumber(SerialNumber serialNumber);
 
-    List<SensorPersistenceEntity> findAllByEquipmentId(Long equipmentId);
+    List<SensorPersistenceEntity> findAllByDeviceId(Long deviceId);
 }

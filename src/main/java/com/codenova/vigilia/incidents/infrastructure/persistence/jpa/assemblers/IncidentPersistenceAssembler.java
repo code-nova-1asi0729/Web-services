@@ -16,7 +16,7 @@ public final class IncidentPersistenceAssembler {
                 entity.getId(),
                 entity.getBuildingId(),
                 entity.getResidentId(),
-                entity.getEquipmentId(),
+                entity.getDeviceId(),
                 entity.getCategory(),
                 entity.getDescription(),
                 entity.getStatus(),
@@ -34,7 +34,7 @@ public final class IncidentPersistenceAssembler {
         if (incident.getId() != null) entity.setId(incident.getId());
         entity.setBuildingId(incident.getBuildingId());
         entity.setResidentId(incident.getResidentId());
-        entity.setEquipmentId(incident.getEquipmentId());
+        entity.setDeviceId(incident.getDeviceId());
         entity.setCategory(incident.getCategory());
         entity.setDescription(incident.getDescription());
         entity.setStatus(incident.getStatus());

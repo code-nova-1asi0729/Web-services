@@ -1,7 +1,7 @@
 package com.codenova.vigilia.assetmonitoring.domain.model.commands;
 
 /**
- * Command to release a sensor from its equipment, so it can be assigned to another one.
+ * Command to release a sensor from its device, so it can be assigned to another one.
  */
 public record ReleaseSensorCommand(Long sensorId) {
 

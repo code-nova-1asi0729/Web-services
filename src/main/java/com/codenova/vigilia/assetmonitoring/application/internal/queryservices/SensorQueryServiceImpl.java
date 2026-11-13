@@ -4,7 +4,7 @@ import com.codenova.vigilia.assetmonitoring.application.queryservices.SensorQuer
 import com.codenova.vigilia.assetmonitoring.domain.model.aggregates.Sensor;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetAllSensorsQuery;
 import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorByIdQuery;
-import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorsByEquipmentIdQuery;
+import com.codenova.vigilia.assetmonitoring.domain.model.queries.GetSensorsByDeviceIdQuery;
 import com.codenova.vigilia.assetmonitoring.domain.repositories.SensorRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,8 @@ public class SensorQueryServiceImpl implements SensorQueryService {
     }
 
     @Override
-    public List<Sensor> handle(GetSensorsByEquipmentIdQuery query) {
-        return sensorRepository.findAllByEquipmentId(query.equipmentId());
+    public List<Sensor> handle(GetSensorsByDeviceIdQuery query) {
+        return sensorRepository.findAllByDeviceId(query.deviceId());
     }
 
     @Override
