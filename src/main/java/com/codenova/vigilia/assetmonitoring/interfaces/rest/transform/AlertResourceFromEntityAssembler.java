@@ -14,6 +14,7 @@ public class AlertResourceFromEntityAssembler {
                 entity.getSeverity().name(),
                 entity.getStatus().name(),
                 entity.getLastValue(),
+                entity.getThresholdValue(),
                 entity.getDetectedAt());
     }
 }

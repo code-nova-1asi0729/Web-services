@@ -25,4 +25,9 @@ public record RaiseAlertResource(
 
         @Schema(description = "Last value read", example = "78.5")
         @NotNull(message = "{alert.error.lastValue.notNull}")
-        Double lastValue) {}
+        Double lastValue,
+
+        @Schema(description = "Normal limit for this metric", example = "4.5")
+        @NotNull(message = "{alert.error.thresholdValue.invalid}")
+        @Positive(message = "{alert.error.thresholdValue.invalid}")
+        Double thresholdValue) {}

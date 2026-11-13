@@ -19,6 +19,7 @@ public final class AlertPersistenceAssembler {
                 entity.getSeverity(),
                 entity.getStatus(),
                 entity.getLastValue(),
+                entity.getThresholdValue(),
                 entity.getDetectedAt(),
                 entity.getResolvedAt());
     }
@@ -32,6 +33,7 @@ public final class AlertPersistenceAssembler {
         entity.setSeverity(alert.getSeverity());
         entity.setStatus(alert.getStatus());
         entity.setLastValue(alert.getLastValue());
+        entity.setThresholdValue(alert.getThresholdValue());
         entity.setDetectedAt(alert.getDetectedAt());
         entity.setResolvedAt(alert.getResolvedAt());
         return entity;

@@ -20,5 +20,7 @@ public record AlertResource(
         String status,
         @Schema(description = "Last value read", example = "78.5")
         Double lastValue,
+        @Schema(description = "Normal limit for this metric", example = "4.5")
+        Double thresholdValue,
         @Schema(description = "When it was detected", example = "2026-10-06T12:00:00Z")
         Instant detectedAt) {}

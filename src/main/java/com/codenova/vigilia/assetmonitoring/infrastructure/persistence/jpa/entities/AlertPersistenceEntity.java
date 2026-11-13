@@ -41,6 +41,9 @@ public class AlertPersistenceEntity extends AuditableAbstractPersistenceEntity {
     private Double lastValue;
 
     @Column(nullable = false)
+    private Double thresholdValue;
+
+    @Column(nullable = false)
     private Instant detectedAt;
 
     private Instant resolvedAt;

@@ -11,6 +11,7 @@ public class RaiseAlertCommandFromResourceAssembler {
                 resource.deviceId(),
                 resource.metric(),
                 resource.severity(),
-                resource.lastValue());
+                resource.lastValue(),
+                resource.thresholdValue());
     }
 }
