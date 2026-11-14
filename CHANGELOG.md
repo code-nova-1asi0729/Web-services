@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-14
+
+Version of the RESTful API delivered for AV2.
+
+### Changed
+
+- Swagger describes the device resource with the device term of the ubiquitous language.
+- Domain comments use device instead of equipment.
+
 ## [0.3.0] - 2026-11-13
 
 ### Added
