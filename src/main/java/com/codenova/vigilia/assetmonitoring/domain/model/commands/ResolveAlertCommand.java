@@ -1,6 +1,6 @@
 package com.codenova.vigilia.assetmonitoring.domain.model.commands;
 /**
- * Command to resolve an alert once the equipment is back to normal.
+ * Command to resolve an alert once the device is back to normal.
  */
 public record ResolveAlertCommand(Long alertId) {
     public ResolveAlertCommand {
