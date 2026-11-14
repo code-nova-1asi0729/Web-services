@@ -8,7 +8,7 @@ import com.codenova.vigilia.shared.domain.model.aggregates.AbstractDomainAggrega
 import lombok.Getter;
 
 /**
- * Residential building whose critical equipment Vigilia monitors.
+ * Residential building whose devices Vigilia monitors.
  */
 @Getter
 public class Building extends AbstractDomainAggregateRoot<Building> {
